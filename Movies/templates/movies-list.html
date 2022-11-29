@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
+{% endblock %}
+
+{% block title %}Filme{% endblock %}
+
+{% block content %}
+<h2>Filme</h2>
+<ul>
+    {% for movie in movies %}
+        <li>
+            <a href="{{ movie.id }}/"><b>{{ movie.name }}</b></a><br>
+            <p class="game-subtitle">{{ movie.genre }} / ab {{ movie.fsk }}</p>
+        </li>
+    {% endfor %}
+</ul>
+
+<a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
+{% endblock %}

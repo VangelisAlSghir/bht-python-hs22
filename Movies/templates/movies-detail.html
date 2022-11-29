@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
+{% endblock %}
+
+{% block title %}Filmdetails{% endblock %}
+
+{% block content %}
+<h2>Details über {{ selected_movie.name }}</h2>
+
+    <table>
+    <tr>
+        <td><b>Name:</b></td>
+        <td>{{ selected_movie.name }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Beschreibung:</b></td>
+        <td>{{ selected_movie.description }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Genre:</b></td>
+        <td>{{ selected_movie.genre }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Hinzugefügt am:</b></td>
+        <td>{{ selected_movie.creation_date }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Hinzugefügt von:</b></td>
+        <td>{{ selected_movie.user }}<br></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a href="{% url 'movie-delete' selected_movie.id %}">Videospiel löschen</a></td>
+    </tr>
+    </table>
+
+    {% for comment in selected_movie_comments %}
+        <span style="color: darkgreen">{{ comment.get_upvotes_count }}</span>
+        <a href="{% url 'comment-vote' selected_movie.id comment.id 'up' %}" style="text-decoration: none">
+            <img src="{% static 'Movies/arrow_up.png' %}" height="20" width="20">
+        </a>
+        <span style="color: crimson">{{ comment.get_downvotes_count }}</span>
+        <a href="{% url 'comment-vote' selected_movie.id comment.id 'down' %}" style="text-decoration: none">
+            <img src="{% static 'Movies/arrow_down.png' %}" height="20" width="20">
+        </a>
+        <b style="color: darkgreen">{{ comment.user.username }} am {{ comment.timestamp }}</b><br>
+        {{ comment.text }}<br><br>
+    {% endfor %}
+    <br>
+
+    <b style="color: crimson">Neuer Kommentar hinzufügen</b><br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Kommentar hinzufügen</button>
+    </form>
+
+    <br>
+    <a href="{% url 'movie-list' %}">Zurück zur Videospielliste</a>
+{% endblock %}

@@ -3,21 +3,11 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 
+from Useradmin.models import DefaultUser
+
 
 # Create your models here.
-class Videogame(models.Model):
-    GAME_GENRES = [
-        ('FPS', 'First-Person Shooter'),  # Wert und lesbare Form
-        ('S', 'Strategie'),
-        ('A', 'Adventure'),
-        ('MOBA', 'Multiplayer Online Battle Arena'),
-        ('RPG', 'Rollenspiel'),
-        ('R', 'Rätsel'),
-        ('Sp', 'Sport'),
-        ('TPS', 'Third-Person Shooter'),
-        ('JnR', 'Jump and Run')
-    ]
-
+class Movie(models.Model):
     FSK_CATEGORIES = [
         (0, 'ab 0'),
         (6, 'ab 6'),
@@ -29,19 +19,16 @@ class Videogame(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000,
                                 blank=True)
-    genre = models.CharField(max_length=4,
-                             choices=GAME_GENRES)
     fsk = models.IntegerField(choices=FSK_CATEGORIES)
+    price = models.FloatField()
+    image = models.FileField(upload_to="movies/images/")
+    pdf = models.FileField(upload_to="movies/pdf/")
     creation_date = models.DateField(default=date.today)
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(DefaultUser,
                              on_delete=models.CASCADE,
                              related_name='users',
                              related_query_name='user',
                              )
-
-    class Meta:
-        verbose_name = 'VideoGame'
-        verbose_name_plural = 'VideoGames'
 
     def __str__(self):
         return self.name + ' (' + self.user + ')'
@@ -50,16 +37,19 @@ class Videogame(models.Model):
         return self.name + ' / ' + self.user + ' / ' + self.creation_date
 
 
-class Comment(models.Model):
+class ProductReview(models.Model):
     text = models.TextField(max_length=500)
+    rating = models.IntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    videogame = models.ForeignKey(Videogame, on_delete=models.CASCADE)
+    user = models.ForeignKey(DefaultUser, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    deleted = models.BinaryField()
+    reported = models.BinaryField()
 
     class Meta:
         ordering = ['timestamp']
-        verbose_name = 'Comment'
-        verbose_name_plural = 'Comments'
+        verbose_name = 'ProductReview'
+        verbose_name_plural = 'ProductReviews'
 
     def get_comment_prefix(self):
         if len(self.text) > 50:
@@ -110,8 +100,8 @@ class Vote(models.Model):
                                   choices=VOTE_TYPES,
                                  )
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(DefaultUser, on_delete=models.CASCADE)
+    productReview = models.ForeignKey(ProductReview, on_delete=models.CASCADE)
 
     def has_same_answer(self, up_or_down):
         U_or_D = 'U'
@@ -121,4 +111,4 @@ class Vote(models.Model):
         return self.up_or_down == U_or_D
 
     def __str__(self):
-        return self.up_or_down + ' on ' + self.comment.videogame.name + ' by ' + self.user.username
+        return self.up_or_down + ' on ' + self.productReview.movie.name + ' by ' + self.user.username

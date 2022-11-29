@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Videogames/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
 {% endblock %}
 
-{% block title %}Videospiel hinzufügen{% endblock %}
+{% block title %}Film hinzufügen{% endblock %}
 
 {% block logged_in_content %}
-<h2>Videospiel hinzufügen</h2>
+<h2>Film hinzufügen</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -19,14 +19,6 @@
         <p>
             <label for="{{ form.description.id_for_label }}">Beschreibung:</label>
             <input id="{{ form.description.id }}"  type="text" name="description">
-        </p>
-        <p>
-            <label for="{{ form.genre.id_for_label }}">Genre:</label>
-            <select id="{{ form.genre.id }}" name="genre">
-                {% for el in genre %}
-                    <option value="{{ el.0 }}">{{ el.1 }}</option>
-                {% endfor %}
-            </select>
         </p>
         <p>
             <label for="{{ form.fsk.id_for_label }}">FSK:</label>
@@ -40,11 +32,11 @@
             <label for="{{ form.creation_date.id_for_label }}">Erstellungsdatum:</label>
             <input id="{{ form.creation_date.id }}"  type="date" name="creation_date">
         </p>
-        <button type="submit">Videospiel hinzufügen</button>
+        <button type="submit">Film hinzufügen</button>
     </form>
 {% endblock %}
 
 {% block not_logged_in_content %}
-    <p>Du musst angemeldet sein, um ein Videospiel hinzuzufügen</p>
+    <p>Du musst angemeldet sein, um ein Film hinzuzufügen</p>
     <a href="{% url 'login' %}">Anmelden</a>
 {% endblock %}
