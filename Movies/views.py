@@ -43,7 +43,10 @@ def movie_create(request):
         filled_form = MovieForm(request.POST, request.FILES)
         filled_form.instance.user = request.user
         filled_form.creation_date = date.today()
+        filled_form.fsk = int(request.POST['fsk'])
         if filled_form.is_valid():
+            filled_form.image = request.FILES['image']
+            filled_form.pdf = request.FILES['pdf']
             filled_form.save()
         else:
             pass
