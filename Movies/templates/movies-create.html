@@ -29,9 +29,22 @@
             </select>
         </p>
         <p>
-            <label for="{{ form.creation_date.id_for_label }}">Erstellungsdatum:</label>
-            <input id="{{ form.creation_date.id }}"  type="date" name="creation_date">
+            <label>Bild:</label>
+            <input id="{{ form.image.id }}" type="file" name="image">
         </p>
+        <p>
+            <label>PDF:</label>
+            <input id="{{ form.pdf.id }}" type="file" name="pdf">
+        </p>
+        <p>
+            <label for="{{ form.price.id_for_label }}">Preis:</label>
+            <input id="{{ form.price.id }}" type="number" name="price">
+        </p>
+
+{#        <p>#}
+{#            <label for="{{ form.creation_date.id_for_label }}">Erstellungsdatum:</label>#}
+{#            <input id="{{ form.creation_date.id }}"  type="date" name="creation_date">#}
+{#        </p>#}
         <button type="submit">Film hinzufügen</button>
     </form>
 {% endblock %}

@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
@@ -38,8 +40,9 @@ def movie_detail(request, **kwargs):
 
 def movie_create(request):
     if request.method == 'POST':
-        filled_form = MovieForm(request.POST)
+        filled_form = MovieForm(request.POST, request.FILES)
         filled_form.instance.user = request.user
+        filled_form.creation_date = date.today()
         if filled_form.is_valid():
             filled_form.save()
         else:
