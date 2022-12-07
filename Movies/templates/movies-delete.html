@@ -12,7 +12,7 @@
     <form method="POST">
         {% csrf_token %}
         <p>Willst du den Film "{{ selected_movie.name }}" wirklich löschen?</p>
-        <a href="{% url 'movie-detail' selected_movie.id %}"><button type="button">Nein</button></a>
+        <a href="{% url 'movies-detail' selected_movie.id %}"><button type="button">Nein</button></a>
         <button type="submit">Ja</button>
     </form>
 {% endblock %}
