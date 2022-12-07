@@ -6,7 +6,7 @@ from Useradmin.models import DefaultUser
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = DefaultUser
-        fields = ['username', 'password']
+        fields = ['username', 'password', 'image']
 
     def save(self, commit=True):
         user = super().save(commit=False)

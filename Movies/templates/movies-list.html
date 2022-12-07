@@ -12,8 +12,12 @@
 <ul>
     {% for movie in movies %}
         <li>
-            <a href="{{ movie.id }}/"><b>{{ movie.name }}</b></a><br>
-            <p class="game-subtitle">{{ movie.genre }} / ab {{ movie.fsk }}</p>
+            <a href="{{ movie.id }}/"><b>
+                <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}">
+                <p>
+                    {{ movie.name }}
+                </p>
+            </a>
         </li>
     {% endfor %}
 </ul>
