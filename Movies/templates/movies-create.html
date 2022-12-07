@@ -23,19 +23,19 @@
         <p>
             <label for="{{ form.fsk.id_for_label }}">FSK:</label>
             <select id="{{ form.fsk.id }}" name="fsk">
-                {% for el in fsk %}
+                {% for el in fsk_categories %}
                     <option value="{{ el.0 }}">{{ el.1 }}</option>
                 {% endfor %}
             </select>
         </p>
-        <p>
-            <label>Bild:</label>
-            <input id="{{ form.image.id }}" type="file" name="image">
-        </p>
-        <p>
-            <label>PDF:</label>
-            <input id="{{ form.pdf.id }}" type="file" name="pdf">
-        </p>
+{#        <p>#}
+{#            <label>Bild:</label>#}
+{#            <input id="{{ form.image.id }}" type="file" name="image">#}
+{#        </p>#}
+{#        <p>#}
+{#            <label>PDF:</label>#}
+{#            <input id="{{ form.pdf.id }}" type="file" name="pdf">#}
+{#        </p>#}
         <p>
             <label for="{{ form.price.id_for_label }}">Preis:</label>
             <input id="{{ form.price.id }}" type="number" name="price">

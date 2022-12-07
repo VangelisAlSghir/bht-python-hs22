@@ -21,8 +21,8 @@ class Movie(models.Model):
                                 blank=True)
     fsk = models.IntegerField(choices=FSK_CATEGORIES)
     price = models.FloatField()
-    image = models.FileField(upload_to="movies/images/")
-    pdf = models.FileField(upload_to="movies/pdf/")
+    image = models.FileField(upload_to="movies/images/", blank=True)
+    pdf = models.FileField(upload_to="movies/pdf/", blank=True)
     creation_date = models.DateField(default=date.today)
     user = models.ForeignKey(DefaultUser,
                              on_delete=models.CASCADE,

@@ -11,7 +11,7 @@ from Movies.models import Movie, ProductReview, Vote
 # Create your views here.
 def movie_list(request):
     movies = Movie.objects.all()
-    context = { 'movie': movies }
+    context = { 'movies': movies }
     return render(request, 'movies-list.html', context)
 
 
@@ -45,8 +45,8 @@ def movie_create(request):
         filled_form.creation_date = date.today()
         filled_form.fsk = int(request.POST['fsk'])
         if filled_form.is_valid():
-            filled_form.image = request.FILES['image']
-            filled_form.pdf = request.FILES['pdf']
+            # filled_form.image = request.FILES['image']
+            # filled_form.pdf = request.FILES['pdf']
             filled_form.save()
         else:
             pass
@@ -55,7 +55,7 @@ def movie_create(request):
     else:
         empty_form = MovieForm()
         fsk = Movie.FSK_CATEGORIES
-        context = {'form': empty_form, 'fsk': fsk}
+        context = {'form': empty_form, 'fsk_categories': fsk}
         return render(request, 'movies-create.html', context)
 
 
