@@ -4,7 +4,7 @@ from .models import Movie, ProductReview
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ['name', 'description', 'fsk', 'price']
+        fields = ['name', 'description', 'fsk', 'image', 'pdf', 'price']
         widgets = {
             'fsk': forms.Select(choices=Movie.FSK_CATEGORIES),
             # 'image': forms.FileField(),
