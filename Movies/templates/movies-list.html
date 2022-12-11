@@ -13,7 +13,7 @@
     {% for movie in movies %}
         <li>
             <a href="{{ movie.id }}/"><b>{{ movie.name }}</b></a><br>
-            <p class="game-subtitle">{{ movie.genre }} / ab {{ movie.fsk }}</p>
+            <p class="film-element">{{ movie.description }} / {{ movie.get_genre_display }}</p>
         </li>
     {% endfor %}
 </ul>

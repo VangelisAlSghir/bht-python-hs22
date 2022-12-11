@@ -21,6 +21,9 @@
             <input id="{{ form.description.id }}"  type="text" name="description">
         </p>
         <p>
+            {{ form.genre.label }}: {{ form.genre }}
+        </p>
+        <p>
             <label for="{{ form.fsk.id_for_label }}">FSK:</label>
             <select id="{{ form.fsk.id }}" name="fsk">
                 {% for el in fsk_categories %}

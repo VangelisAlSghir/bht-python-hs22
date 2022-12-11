@@ -1,12 +1,14 @@
 from django import forms
 from .models import Movie, ProductReview
 
+
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ['name', 'description', 'fsk', 'image', 'pdf', 'price']
+        fields = ['name', 'description', 'genre', 'fsk', 'image', 'pdf', 'price']
         widgets = {
             'fsk': forms.Select(choices=Movie.FSK_CATEGORIES),
+            'genre': forms.Select(choices=Movie.GENRES),
             # 'image': forms.FileField(),
             # 'pdf': forms.FileField(),
             'user_id': forms.HiddenInput(),
@@ -15,7 +17,6 @@ class MovieForm(forms.ModelForm):
 
 
 class ProductReviewForm(forms.ModelForm):
-
     class Meta:
         model = ProductReview
         fields = ['text']

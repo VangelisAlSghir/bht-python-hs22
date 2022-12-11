@@ -2,18 +2,12 @@
     font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
-.game-subtitle {
-    margin: 0;
-    font-size: 14px;
-}
-
-ul {
-    padding-left: 15px;
-}
-
-li {
-    list-style: disclosure-closed;
-    margin-bottom: 15px;
+.film-element {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+    grid-auto-rows: 100px;
+    align-items: start;
 }
 
 .add-element {

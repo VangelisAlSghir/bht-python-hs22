@@ -15,11 +15,19 @@ class Movie(models.Model):
         (16, 'ab 16'),
         (18, 'ab 18'),
     ]
+    GENRES = [
+        ('H', 'Horror'),
+        ('F', 'Familienfilm'),
+        ('A', 'Action'),
+        ('S', 'Superhelden'),
+    ]
 
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000,
                                 blank=True)
     fsk = models.IntegerField(choices=FSK_CATEGORIES)
+    genre = models.CharField(choices=GENRES,
+                             max_length=1)
     price = models.FloatField()
     image = models.FileField(upload_to="movies/images/", blank=True)
     pdf = models.FileField(upload_to="movies/pdf/", blank=True)
