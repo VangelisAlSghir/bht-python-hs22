@@ -7,22 +7,23 @@
 
 {% block title %}Filme{% endblock %}
 
-{% block content %}
-<h2>Filme</h2>
-<ul>
-    {% for movie in movies %}
-        <li>
-            <a href="{{ movie.id }}/"><b>
-                <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}">
-                <p>
+<body class="movies-list">
+    {% block content %}
+        <div class="movie-container">
+        {% for movie in movies %}
+            <div class="movie-element">
+                <a href="{{ movie.id }}/">
+                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}">
+                    <p>
                     {{ movie.name }}
-                </p>
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
 
-{% if user.isStaff %}
-    <a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
-{% endif %}
-{% endblock %}
+    {% if user.isStaff %}
+        <a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
+    {% endif %}
+    {% endblock %}
+</body>

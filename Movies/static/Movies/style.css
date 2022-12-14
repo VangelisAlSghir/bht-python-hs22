@@ -10,13 +10,12 @@
 .movie-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
-    height: 150px;
+    justify-content: flex-start;
 }
 
 .movie-element {
     border-style: solid;
+    border-color: #D81F26;
 }
 
 .add-element {
