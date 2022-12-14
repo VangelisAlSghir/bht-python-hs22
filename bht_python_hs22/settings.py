@@ -128,3 +128,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Useradmin.DefaultUser'
+
+LOGIN_REDIRECT_URL = '/movies/show/'
+
