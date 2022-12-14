@@ -11,11 +11,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .movie-element {
+    text-align: center;
     border-style: solid;
     border-color: #D81F26;
+    margin: 10px;
 }
 
 .add-element {
@@ -24,6 +28,7 @@
     background-color: #D81F26;
     color: white;
     padding: 10px;
+    margin-left: 60px;
     text-decoration: none;
     border-radius: 15px;
 }
