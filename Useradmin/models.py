@@ -5,3 +5,7 @@ from django.db import models
 
 class DefaultUser(AbstractUser):
     image = models.FileField(upload_to="profile_images/")
+
+    def isStaff(self):
+        return self.is_staff
+
