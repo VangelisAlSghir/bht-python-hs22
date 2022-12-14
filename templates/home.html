@@ -6,11 +6,14 @@
 {% endblock %}
 
 {% block title %}Homepage Titel{% endblock %}
-x§
+
 {% block content %}
     {% if user.is_authenticated %}
         {% block logged_in_content %}
-            <p>Hi {{ user.username }}!</p>
+            <p>
+                Hi {{ user.username }}!
+                <img style="width: 70px;" class="profile_image" src="/media/{{ user.image }}">
+            </p>
             <p><a href="{% url 'movies-list' %}">Filme anzeigen</a></p>
             <a href="{% url 'logout' %}">Abmelden</a>
         {% endblock %}
