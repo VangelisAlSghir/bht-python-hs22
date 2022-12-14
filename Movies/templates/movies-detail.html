@@ -31,18 +31,20 @@
         <td><b>PDF:</b></td>
         <td><a target="_blank" href="/media/{{ selected_movie.pdf }}">Herunterladen</a></td>
     </tr>
-    <tr>
-        <td><b>Hinzugefügt am:</b></td>
-        <td>{{ selected_movie.creation_date }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Hinzugefügt von:</b></td>
-        <td>{{ selected_movie.user }}<br></td>
-    </tr>
+{#    <tr>#}
+{#        <td><b>Hinzugefügt am:</b></td>#}
+{#        <td>{{ selected_movie.creation_date }}<br></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td><b>Hinzugefügt von:</b></td>#}
+{#        <td>{{ selected_movie.user }}<br></td>#}
+{#    </tr>#}
+    {% if user.isStaff %}
     <tr>
         <td></td>
         <td><a href="{% url 'movies-delete' selected_movie.id %}">Film löschen</a></td>
     </tr>
+    {% endif %}
     </table>
 
     {% for comment in selected_movie_comments %}
@@ -67,5 +69,5 @@
     </form>
 
     <br>
-    <a href="{% url 'movies-list' %}">Zurück zur Videospielliste</a>
+    <a href="{% url 'movies-list' %}">Zurück zur Filmübersicht</a>
 {% endblock %}

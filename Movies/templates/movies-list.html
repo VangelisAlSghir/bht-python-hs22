@@ -22,5 +22,7 @@
     {% endfor %}
 </ul>
 
-<a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
+{% if user.isStaff %}
+    <a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
+{% endif %}
 {% endblock %}
