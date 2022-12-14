@@ -8,19 +8,5 @@
 {% block title %}Homepage Titel{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        {% block logged_in_content %}
-            <p>
-                Hi {{ user.username }}!
-                <img style="width: 70px;" class="profile_image" src="/media/{{ user.image }}">
-            </p>
-            <p><a href="{% url 'movies-list' %}">Filme anzeigen</a></p>
-            <a href="{% url 'logout' %}">Abmelden</a>
-        {% endblock %}
-    {% else %}
-        {% block not_logged_in_content %}
-            <p>Du bist nicht angemeldet</p>
-            <a href="{% url 'login' %}">Anmelden</a>
-        {% endblock %}
-    {% endif %}
+    <p><a href="{% url 'movies-list' %}">Filme anzeigen</a></p>
 {% endblock %}

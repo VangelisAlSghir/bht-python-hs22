@@ -39,6 +39,9 @@ def movie_detail(request, **kwargs):
 
 
 def movie_create(request):
+    if not request.user.is_staff and not request.user.is_superuser:
+        return redirect('movies-list')
+
     if request.method == 'POST':
         filled_form = MovieForm(request.POST, request.FILES)
         filled_form.instance.user = request.user
@@ -61,6 +64,9 @@ def movie_create(request):
 
 def movie_delete(request, **kwargs):
     movie_id = kwargs['pk']
+    if not request.user.is_staff and not request.user.is_superuser:
+        return redirect('movies-list')
+
     if request.method == 'POST':
         Movie.objects.get(id=movie_id).delete()
         return redirect('movies-list')
