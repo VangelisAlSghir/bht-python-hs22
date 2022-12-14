@@ -2,18 +2,27 @@
     font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
-.film-element {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 10px;
-    grid-auto-rows: 100px;
-    align-items: start;
+* {
+    background-color: black;
+    color: white;
+}
+
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 150px;
+}
+
+.movie-element {
+    border-style: solid;
 }
 
 .add-element {
     display: inline-block;
     font-weight: bold;
-    background-color: #06b88c;
+    background-color: #D81F26;
     color: white;
     padding: 10px;
     text-decoration: none;
