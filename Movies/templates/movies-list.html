@@ -13,7 +13,7 @@
         {% for movie in movies %}
             <div class="movie-element">
                 <a href="{{ movie.id }}/">
-                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="{{ movie.image }}">
+                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
                     <p>
                     {{ movie.name }}
                     </p>
