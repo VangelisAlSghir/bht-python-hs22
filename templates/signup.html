@@ -1,12 +1,12 @@
 {% extends 'home.html' %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Registrieren{% endblock %}
 
 {% block content %}
-    <h2>Sign up</h2>
-    <form method="post">
+    <h2>Registrieren</h2>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Sign up</button>
+        <button type="submit">Registrieren</button>
     </form>
 {% endblock %}

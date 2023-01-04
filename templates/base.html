@@ -12,6 +12,7 @@
                 Hi {{ user.username }}!
                 <img style="width: 70px;" class="profile_image" src="/media/{{ user.image }}">
             </p>
+            <a href="{% url 'edit-user' %}">Benutzerkontoeinstellungen</a>
             <a href="{% url 'logout' %}">Abmelden</a>
         {% endblock %}
     {% else %}

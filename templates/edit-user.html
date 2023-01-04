@@ -1,0 +1,24 @@
+{% extends 'home.html' %}
+
+{% block title %}Benutzerdaten ändern{% endblock %}
+
+{% block content %}
+    <h2>Benutzerdaten ändern</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>Wenn Felder leer gelassen werden, bleiben die derzeitigen Daten erhalten.</p>
+        <p>
+            <label for="{{ form.new_password.id_for_label }}">Neues Kennwort:</label>
+            <input id="{{ form.new_password.id }}" type="password" name="new_password">
+        </p>
+        <p>
+            <label>Aktuelles Profilbild</label>
+            <img src="{{ image.url }}">
+        </p>
+        <p>
+            <label>Neues Profilbild auswählen:</label>
+            <input id="{{ form.image.id }}" type="file" name="image">
+        </p>
+        <button type="submit">Änderungen speichern</button>
+    </form>
+{% endblock %}
