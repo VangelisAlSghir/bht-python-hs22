@@ -25,7 +25,8 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('useradmin/', include('Useradmin.urls')),
     path('useradmin/', include('django.contrib.auth.urls')),
-    path('movies/', include('Movies.urls'))
+    path('movies/', include('Movies.urls')),
+    path('customerservice/', include('Customerservice.urls'))
 ]
 
 if settings.DEBUG:
