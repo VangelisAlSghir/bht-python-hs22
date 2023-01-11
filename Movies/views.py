@@ -94,3 +94,12 @@ def vote(request, pk: str, pk_comment: str, up_or_down: str):
             comment.vote(user, up_or_down)
 
     return redirect('movies-detail', pk=pk)
+
+def report_product_review(request, pk: str, pk_comment: str):
+    comment = ProductReview.objects.get(id=int(pk_comment))
+
+    comment.reported = True
+    comment.save()
+
+    return redirect('movies-detail', pk=pk)
+
