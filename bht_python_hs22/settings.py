@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Useradmin.apps.UseradminConfig',
     'Movies.apps.MoviesConfig',
-    'Customerservice.apps.CustomerserviceConfig'
+    'Customerservice.apps.CustomerserviceConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,4 @@ AUTH_USER_MODEL = 'Useradmin.DefaultUser'
 
 LOGIN_REDIRECT_URL = '/movies/show/'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

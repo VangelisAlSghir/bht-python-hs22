@@ -7,23 +7,31 @@
 
 {% block title %}BestFlix{% endblock %}
 
-<body class="movies-list">
+<body>
     {% block content %}
-        <div class="movie-container">
+        <div class="container">
+        <div class="row">
         {% for movie in movies %}
-            <div class="movie-element">
-                <a href="{{ movie.id }}/">
-                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
-                    <p>
-                    {{ movie.name }}
-                    </p>
+            <div class="col-sm m-2">
+                <a class="filmContainer" href="{{ movie.id }}/">
+                    <img class="filmImage" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
+                    <div class="middle">
+                        <div class="filmTitle"> {{ movie.name }} </div>
+                    </div>
                 </a>
+{% comment %}                <a class="text-center card" style="width: 18rem;">
+                    <img class="card-img-top" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.name }}</h5>
+                  </div>
+                </a>{% endcomment %}
             </div>
         {% endfor %}
         </div>
-
+        <br>
     {% if user.isStaff %}
-        <a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
+        <a class="button btn btn-dark" href="{% url 'movies-create' %}" role="button">Film hinzufügen</a>
     {% endif %}
+        </div>
     {% endblock %}
 </body>
