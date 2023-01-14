@@ -1,11 +1,14 @@
 from datetime import date
-
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
-
 from Movies.forms import MovieForm, ProductReviewForm
 from Movies.models import Movie, ProductReview, Vote
+
+from django.views.generic import TemplateView, ListView
+from django.db.models import Q
+
+
 
 
 # Create your views here.
@@ -102,4 +105,15 @@ def report_product_review(request, pk: str, pk_comment: str):
     comment.save()
 
     return redirect('movies-detail', pk=pk)
+
+class SearchResultsView(ListView):
+    model = Movie
+    template_name = 'search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get("eingabe")
+        object_list = Movie.objects.filter(Q(name__icontains=query))
+
+        return object_list
+
 

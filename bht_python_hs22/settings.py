@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'Useradmin.apps.UseradminConfig',
     'Movies.apps.MoviesConfig',
     'Customerservice.apps.CustomerserviceConfig',
-    'crispy_forms',
+    'Shoppingcart.apps.ShoppingcartConfig',
+
 ]
 
 MIDDLEWARE = [

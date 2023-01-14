@@ -1,0 +1,27 @@
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
+{% endblock %}
+
+{% block title %}Deine Suchergebnisse{% endblock %}
+
+{% block listcontent %}
+<body class="movies_list">
+    {% block content %}
+        <div class="movie-container">
+        {% for movie in object_list %}
+            <div class="movie-element">
+                <a href="{{ movie.id }}/">
+                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
+                    <p>
+                    {{ movie.name }}
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+        <a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
+    {% endblock %}
+</body>
+{% endblock %}

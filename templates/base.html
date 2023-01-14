@@ -16,6 +16,12 @@
             <a class="navbar-brand" href="{% url 'movies-list' %}">BestFlix</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
+                      <a style="float: right;" href="{% url 'shopping-cart-show' %}">
+                        Shopping Cart ({% if user.is_authenticated %}
+                            {{ request.user.count_shopping_cart_items }}
+                                {% else %} 0
+                                    {% endif %})
+                                         </a>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">

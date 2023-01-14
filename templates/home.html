@@ -1,12 +1,43 @@
-{% extends "base.html" %}
 {% load static %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}">
-{% endblock %}
-
 {% block title %}Homepage Titel{% endblock %}
-
 {% block content %}
-    <p><a href="{% url 'movies-list' %}">Filme anzeigen</a></p>
+
+    {% if user.is_authenticated %}
+
+
+        {% block logged_in_content %}
+
+            <form name="myform" method="GET" action="{% url 'search_results' %}">
+                <input name="eingabe" type="text" placeholder="suche">
+            </form>
+
+              <a style="float: right;" href="{% url 'shopping-cart-show' %}">
+                        Shopping Cart ({% if user.is_authenticated %}
+                            {{ request.user.count_shopping_cart_items }}
+                                {% else %} 0
+                                    {% endif %})
+                                         </a>
+
+
+            <a href="{% url 'edit-user' %}">Konto</a>
+            <a href="{% url 'logout' %}">Abmelden</a>
+
+
+            <H1>Homepages Name</H1>
+            <p>Hi {{ user.username }}!</p>
+               <p><a href="{% url 'movies-list' %}">Filme anzeigen</a></p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% endblock %}
+
+    {% else %}
+        {% block not_logged_in_content %}
+            <H1>Homepages Name</H1>
+            <p>You are not logged in</p>
+            <p><a href="{% url 'login' %}">Login</a></p>
+            <a href="{% url 'signup' %}">Signup</a>
+        {% endblock %}
+    {% endif %}
 {% endblock %}
+
+
