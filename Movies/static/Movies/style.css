@@ -1,5 +1,6 @@
 body {
     background-color: #161616;
+    color: grey;
 }
 
 .filmTitle {
@@ -39,7 +40,6 @@ body {
     color: black;
     background-color: white;
     font-weight: bold;
-    margin-left: 7px;
 }
 
 .button:hover {

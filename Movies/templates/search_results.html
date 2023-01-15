@@ -1,10 +1,14 @@
+{% extends 'base.html' %}
 {% load static %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
 {% endblock %}
 
-{% block title %}Deine Suchergebnisse{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 {% block listcontent %}
 <body class="movies_list">

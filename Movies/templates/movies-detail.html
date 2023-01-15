@@ -1,12 +1,16 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
 {% endblock %}
 
-{% block title %}Filmdetails{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+{% endblock %}
 
+<body>
 {% block content %}
 <h2>Details über {{ selected_movie.name }}</h2>
 
@@ -72,3 +76,4 @@
     <br>
     <a href="{% url 'movies-list' %}">Zurück zur Filmübersicht</a>
 {% endblock %}
+</body>

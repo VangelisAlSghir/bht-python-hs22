@@ -1,11 +1,14 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
 {% endblock %}
 
-{% block title %}BestFlix{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 <body>
     {% block content %}
@@ -30,7 +33,7 @@
         </div>
         <br>
     {% if user.isStaff %}
-        <a class="button btn btn-dark" href="{% url 'movies-create' %}" role="button">Film hinzufügen</a>
+        <a class="mx-2 button btn btn-dark" href="{% url 'movies-create' %}" role="button">Film hinzufügen</a>
     {% endif %}
         </div>
     {% endblock %}

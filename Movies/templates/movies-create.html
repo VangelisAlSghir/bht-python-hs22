@@ -1,58 +1,58 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
 {% endblock %}
 
-{% block title %}Film hinzufügen{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+{% endblock %}
 
-{% block logged_in_content %}
-<h2>Film hinzufügen</h2>
-    <form method="POST" enctype="multipart/form-data">
+<body>
+{% block content %}
+<h2 class="mx-5">Film hinzufügen</h2>
+    <form class="list-group mx-5 mt-2 border rounded" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        <p>
+        <li class="list-group-item list-group-item-dark">
             <label for="{{ form.name.id_for_label }}">Name:</label>
             <input id="{{ form.name.id }}" type="text" name="name" required>
-        </p>
-        <p>
+        </li>
+        <li class="list-group-item list-group-item-dark">
             <label for="{{ form.description.id_for_label }}">Beschreibung:</label>
             <input id="{{ form.description.id }}"  type="text" name="description">
-        </p>
-        <p>
+        </li>
+        <li class="list-group-item list-group-item-dark">
             {{ form.genre.label }}: {{ form.genre }}
-        </p>
-        <p>
+        </li>
+        <li class="list-group-item list-group-item-dark">
             <label for="{{ form.fsk.id_for_label }}">FSK:</label>
             <select id="{{ form.fsk.id }}" name="fsk">
                 {% for el in fsk_categories %}
                     <option value="{{ el.0 }}">{{ el.1 }}</option>
                 {% endfor %}
             </select>
-        </p>
-        <p>
+        </li>
+        <li class="list-group-item list-group-item-dark">
             <label>Bild:</label>
             <input id="{{ form.image.id }}" type="file" name="image">
-        </p>
-        <p>
+        </li>
+        <li class="list-group-item list-group-item-dark">
             <label>PDF:</label>
             <input id="{{ form.pdf.id }}" type="file" name="pdf">
-        </p>
-        <p>
+        </li>
+        <li class="list-group-item list-group-item-dark">
             <label for="{{ form.price.id_for_label }}">Preis:</label>
             <input id="{{ form.price.id }}" type="number" name="price">
-        </p>
+        </li>
 
 {#        <p>#}
 {#            <label for="{{ form.creation_date.id_for_label }}">Erstellungsdatum:</label>#}
 {#            <input id="{{ form.creation_date.id }}"  type="date" name="creation_date">#}
 {#        </p>#}
-        <button type="submit">Film hinzufügen</button>
+        <button class="button btn btn-dark" type="submit">Film hinzufügen</button>
     </form>
 {% endblock %}
-
-{% block not_logged_in_content %}
-    <p>Du musst angemeldet sein, um ein Film hinzuzufügen</p>
-    <a href="{% url 'login' %}">Anmelden</a>
-{% endblock %}
+</body>
