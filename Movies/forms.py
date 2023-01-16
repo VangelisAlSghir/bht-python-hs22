@@ -17,7 +17,7 @@ class MovieForm(forms.ModelForm):
 class ProductReviewForm(forms.ModelForm):
     class Meta:
         model = ProductReview
-        fields = ['text']
+        fields = ['text', 'rating']
         widgets = {
             'user': forms.HiddenInput(),
             'movie': forms.HiddenInput(),

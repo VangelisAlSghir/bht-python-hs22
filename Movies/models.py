@@ -51,8 +51,8 @@ class ProductReview(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(DefaultUser, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    deleted = models.BinaryField()
-    reported = models.BinaryField()
+    deleted = models.BooleanField(default=False)
+    reported = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['timestamp']
@@ -72,12 +72,12 @@ class ProductReview(models.Model):
 
         vote = Vote.objects.create(up_or_down=U_or_D,
                                    user=user,
-                                   comment=self
+                                   productReview=self
                                    )
 
     def get_upvotes(self):
         upvotes = Vote.objects.filter(up_or_down='U',
-                                      comment=self)
+                                      productReview=self)
         return upvotes
 
     def get_upvotes_count(self):
@@ -85,7 +85,7 @@ class ProductReview(models.Model):
 
     def get_downvotes(self):
         downvotes = Vote.objects.filter(up_or_down='D',
-                                        comment=self)
+                                        productReview=self)
         return downvotes
 
     def get_downvotes_count(self):

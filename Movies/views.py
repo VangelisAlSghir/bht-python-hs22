@@ -26,17 +26,22 @@ def movie_detail(request, **kwargs):
         form = ProductReviewForm(request.POST)
         form.instance.user = request.user
         form.instance.movie = selected_movie
+
         if form.is_valid():
             form.save()
         else:
             print(form.errors)
 
-    comments = ProductReview.objects.filter(movie=selected_movie)
+    reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
+
+    user_has_rated = reviews.filter(user=request.user).count() > 0
 
     context = {
         'selected_movie': selected_movie,
-        'selected_movie_comments': comments,
-        'comment_form': ProductReviewForm
+        'selected_movie_reviews': reviews,
+        'comment_form': ProductReviewForm,
+        'user_has_rated': user_has_rated,
+        'current_user_id': request.user.id
     }
     return render(request, 'movies-detail.html', context)
 
@@ -83,7 +88,7 @@ def vote(request, pk: str, pk_comment: str, up_or_down: str):
     comment = ProductReview.objects.get(id=int(pk_comment))
     user = request.user
     try:
-        existing_vote = Vote.objects.get(user=user, comment=comment)
+        existing_vote = Vote.objects.get(user=user, productReview=comment)
     except Vote.DoesNotExist:
         existing_vote = None
 
@@ -98,13 +103,40 @@ def vote(request, pk: str, pk_comment: str, up_or_down: str):
 
     return redirect('movies-detail', pk=pk)
 
+
 def report_product_review(request, pk: str, pk_comment: str):
     comment = ProductReview.objects.get(id=int(pk_comment))
 
     comment.reported = True
     comment.save()
 
-    return redirect('movies-detail', pk=pk)
+    return render(request, 'movies-reported.html', {'pk': pk})
+
+
+def delete_product_review(request, pk: str, pk_comment: str):
+    comment = ProductReview.objects.get(id=int(pk_comment))
+
+    comment.deleted = True
+    comment.save()
+
+    return render(request, 'movie-review-deleted.html', {'pk': pk})
+
+
+def edit_review(request, pk: str, pk_comment: str):
+    comment = ProductReview.objects.get(id=int(pk_comment))
+
+    if request.method == 'POST':
+        form = ProductReviewForm(request.POST)
+        comment.text = form.instance.text
+        comment.rating = form.instance.rating
+        comment.save()
+
+        return redirect('movies-detail', pk)
+    else:
+        form = ProductReviewForm(instance=comment)
+        context = {'form': form}
+        return render(request, 'edit-review.html', context)
+
 
 class SearchResultsView(ListView):
     model = Movie

@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
+{% endblock %}
+
+{% block title %}Produktbewertung gelöscht{% endblock %}
+
+{% block content %}
+<h2>Produktbewertung gelöscht</h2>
+<p>Die Produktbewertung wurde erfolgreich gelöscht.</p>
+<a href="{% url 'movies-detail' pk %}">Zurück zu den Filmdetails</a>
+{% endblock %}
