@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -29,3 +30,7 @@ def edit_user(request, **kwargs):
         return render(request, 'edit-user.html', context)
 
 
+def logout_page(request):
+    logout(request)
+
+    return render(request, "registration/logout.html")

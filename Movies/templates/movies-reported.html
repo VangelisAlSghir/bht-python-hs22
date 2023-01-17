@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
+{% endblock %}
+
+{% block title %}Kommentar gemeldet{% endblock %}
+
+{% block content %}
+<h2>Der Kommentar wurde erfolgreich gemeldet.</h2>
+<p>Die ausgewählte Produktbewertung wurde gemeldet und wird zeitnah von einem Mitarbeiter geprüft.
+    Sollte die Bewertung gegen unsere Richtlinien verstossen, wird sie gelöscht.</p>
+
+<a href="{% url 'movies-detail' pk %}">Zurück zu den Filmdetails</a>
+{% endblock %}

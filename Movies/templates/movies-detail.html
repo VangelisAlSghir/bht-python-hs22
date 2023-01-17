@@ -29,7 +29,7 @@
     </tr>
     <tr>
         <td><b>Bild:</b></td>
-        <td><img style="max-width: 300px; max-height: 300px;" src="/{{ selected_movie.image }}"></td>
+        <td><img style="max-width: 300px; max-height: 300px;" src="/media/{{ selected_movie.image }}"></td>
     </tr>
     <tr>
         <td><b>PDF:</b></td>
@@ -51,28 +51,35 @@
     {% endif %}
     </table>
 
-    {% for comment in selected_movie_comments %}
-        <span style="color: darkgreen">Hilfreich: {{ comment.get_upvotes_count }}</span>
-        <a href="{% url 'comment-vote' selected_movie.id comment.id 'up' %}" style="text-decoration: none">
+    {% for review in selected_movie_reviews %}
+        <span style="color: darkgreen">Hilfreich: {{ review.get_upvotes_count }}</span>
+        <a href="{% url 'comment-vote' selected_movie.id review.id 'up' %}" style="text-decoration: none">
             <img src="{% static 'Movies/arrow_up.png' %}" height="20" width="20">
         </a>
-        <span style="color: crimson">Nicht hilfreich: {{ comment.get_downvotes_count }}</span>
-        <a href="{% url 'comment-vote' selected_movie.id comment.id 'down' %}" style="text-decoration: none">
+        <span style="color: crimson">Nicht hilfreich: {{ review.get_downvotes_count }}</span>
+        <a href="{% url 'comment-vote' selected_movie.id review.id 'down' %}" style="text-decoration: none">
             <img src="{% static 'Movies/arrow_down.png' %}" height="20" width="20">
         </a>
-        <b style="color: darkgreen">{{ comment.user.username }} am {{ comment.timestamp }}</b><br>
-        <p>{{ comment.text }}</p>
-        <a href="{% url 'report-review' comment.id %}">Produktbewertung melden</a>
+        <b style="color: darkgreen">{{ review.user.username }} am {{ review.timestamp }}</b>
+        <p>Bewertung: {{ review.rating }}</p>
+        <p>{{ review.text }}</p>
+        {% if review.user.id == current_user_id %}
+            <a href="{% url 'edit-review' selected_movie.id review.id %}">Bewertung bearbeiten</a>
+            <a href="{% url 'delete-review' selected_movie.id review.id %}">Bewertung löschen</a>
+        {% else %}
+            <a href="{% url 'report-review' selected_movie.id review.id %}">Produktbewertung melden</a><br/>
+        {% endif %}
     {% endfor %}
     <br>
 
-    <b style="color: crimson">Neuer Kommentar hinzufügen</b><br>
+    {% if not user_has_rated %}
+    <b style="color: crimson">Produktbewertung schreiben</b><br>
     <form method="POST">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit">Kommentar hinzufügen</button>
+        <button type="submit">Speichern</button>
     </form>
-
+    {% endif %}
     <br>
     <a href="{% url 'movies-list' %}">Zurück zur Filmübersicht</a>
 {% endblock %}
