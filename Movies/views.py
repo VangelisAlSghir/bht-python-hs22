@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 from Movies.forms import MovieForm, ProductReviewForm
+from Shoppingcart.models import ShoppingCart
 from Movies.models import Movie, ProductReview, Vote
 
 from django.views.generic import TemplateView, ListView
@@ -22,7 +23,7 @@ def movie_detail(request, **kwargs):
     movie_id = kwargs['pk']
     selected_movie = Movie.objects.get(id=movie_id)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'add_comment' in request.POST:
         form = ProductReviewForm(request.POST)
         form.instance.user = request.user
         form.instance.movie = selected_movie
@@ -31,6 +32,11 @@ def movie_detail(request, **kwargs):
             form.save()
         else:
             print(form.errors)
+
+    # Add to shopping cart
+    if request.method == 'POST' and 'add_to_cart' in request.POST:
+        myuser = request.user
+        ShoppingCart.add_item(myuser, selected_movie)
 
     reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
 

@@ -1,12 +1,10 @@
-
+{% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Shopping cart{% endblock %}
-
 {% block content %}
-<h2>Shopping cart</h2>
+<h2>Warenkorb</h2>
     {% if shopping_cart_is_empty %}
-        Your shopping cart is empty.<br>
+        Keine Produkte im Warenkorb<br>
     {% else %}
         {% for item in shopping_cart_items %}
             {{ item.product_name }}<br>
@@ -14,16 +12,16 @@
             <br>
         {% endfor %}
 
-        Total amount: {{ total }} €
+        Insgesamt: {{ total }} €
 
         <br><br>
         <form method="POST">
             {% csrf_token %}
-            <button type="submit" name="empty">Empty the shopping cart</button><br>
-            <button type="submit" name="pay">Pay with credit card</button>
+            <button type="submit" name="empty">Warenkorb löschen</button><br>
+            <button type="submit" name="pay">Bezahlen</button>
         </form>
     {% endif %}
 
     <br>
-    <a href="{% url 'movies-list' %}">Keep shopping movies</a>
-{% endblock %}
+    <a href="{% url 'movies-list' %}">Zurück zu den Filmen</a>
+{% endblock %} 
