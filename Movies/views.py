@@ -34,7 +34,10 @@ def movie_detail(request, **kwargs):
 
     reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
 
-    user_has_rated = reviews.filter(user=request.user).count() > 0
+    if request.user.is_authenticated:
+        user_has_rated = reviews.filter(user=request.user).count() > 0
+    else:
+        user_has_rated = True
 
     context = {
         'selected_movie': selected_movie,
@@ -126,10 +129,8 @@ def edit_review(request, pk: str, pk_comment: str):
     comment = ProductReview.objects.get(id=int(pk_comment))
 
     if request.method == 'POST':
-        form = ProductReviewForm(request.POST)
-        comment.text = form.instance.text
-        comment.rating = form.instance.rating
-        comment.save()
+        form = ProductReviewForm(request.POST, instance=comment)
+        form.save()
 
         return redirect('movies-detail', pk)
     else:

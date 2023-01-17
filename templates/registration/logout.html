@@ -1,0 +1,8 @@
+{% extends 'home.html' %}
+
+{% block title %}Abmeldung{% endblock %}
+
+{% block content %}
+    <p>Du wurdest erfolgreich abgemeldet.</p>
+    <a href="{% url 'login' %}">Erneut anmelden</a>
+{% endblock %}

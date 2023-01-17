@@ -16,8 +16,8 @@
         <div class="movie-container">
         {% for movie in object_list %}
             <div class="movie-element">
-                <a href="{{ movie.id }}/">
-                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
+                <a href="/movies/show/{{ movie.id }}/">
+                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}">
                     <p>
                     {{ movie.name }}
                     </p>
@@ -25,7 +25,6 @@
             </div>
         {% endfor %}
         </div>
-        <a class="add-element" href={% url 'movies-create' %}>Film hinzufügen</a><br>
     {% endblock %}
 </body>
 {% endblock %}

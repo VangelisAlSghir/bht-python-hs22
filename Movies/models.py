@@ -29,8 +29,8 @@ class Movie(models.Model):
     genre = models.CharField(choices=GENRES,
                              max_length=1)
     price = models.FloatField()
-    image = models.FileField(upload_to="media/movies/images/", blank=True)
-    pdf = models.FileField(upload_to="media/movies/pdf/", blank=True)
+    image = models.FileField(upload_to="movies/images/", blank=True)
+    pdf = models.FileField(upload_to="movies/pdf/", blank=True)
     creation_date = models.DateField(default=date.today)
     user = models.ForeignKey(DefaultUser,
                              on_delete=models.CASCADE,
