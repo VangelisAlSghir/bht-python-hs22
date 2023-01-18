@@ -8,16 +8,19 @@
 
 {% block title %}
     BestFlix</title>
-    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
 {% endblock %}
 
 <body>
 {% block content %}
-    <h1>Willkommen bei BestFlix!</h1>
-    <p>Entdecke die besten Filme</p>
-            <a href="{% url 'movies-list' %}">
-            <img class="rounded mx-auto d-block" src="/media/title_image/BestFlix.png">
-            </a>
+    <br><br>
+    <a href="{% url 'movies-list' %}" style="color: grey">
+       <img class="img-fluid rounded mx-auto d-block" alt="" src="static/media/title_image/BestFlix.png">
+    <div style="margin: auto; width: 50%; text-align: center">
+        <h1>Willkommen bei BestFlix!</h1>
+        <p>Entdecke die besten Filme</p>
+    </div>
+    </a>
 {% endblock %}
 </body>
 

@@ -21,9 +21,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'movies-list' %}">Movies <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'movies-list' %}">Filme <span class="sr-only">(aktuell)</span></a>
             </li>
+            {% if user.can_delete %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'customerservice-home' %}">Kundendienst</a>
+            </li>
+            {% endif %}
         </ul>
 
         {#Suchfunktion#}
@@ -32,7 +37,7 @@
             <button class="btn btn-danger my-2 my-sm-0 no-border-radius-left" type="submit">Suchen</button>
         </form>
 
-        <a style="float: right;" href="{% url 'shopping-cart-show' %}">
+        <a style="float: right;" class="mx-2" href="{% url 'shopping-cart-show' %}">
             Warenkorb (
             {% if user.is_authenticated %}
                 {{ request.user.count_shopping_cart_items }}
@@ -50,12 +55,6 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <div class="dropdown-item">Willkommen {{ user.username }}!</div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" style="float: right;" href="{% url 'shopping-cart-show' %}">
-                Warenkorb ({% if user.is_authenticated %}
-                    {{ request.user.count_shopping_cart_items }}
-                        {% else %} 0
-                            {% endif %})
-                                 </a>
                 <a class="dropdown-item" href="{% url 'edit-user' %}">Kontoeinstellungen</a>
                 <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">Abmelden</a>

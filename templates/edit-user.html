@@ -13,7 +13,9 @@
         </p>
         <p>
             <label>Aktuelles Profilbild</label>
-            <img src="{{ image.url }}">
+            {% if image %}
+                <img src="{{ image.url }}">
+            {% endif %}
         </p>
         <p>
             <label>Neues Profilbild auswählen:</label>
