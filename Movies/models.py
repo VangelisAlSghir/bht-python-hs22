@@ -91,6 +91,9 @@ class ProductReview(models.Model):
     def get_downvotes_count(self):
         return len(self.get_downvotes())
 
+    def is_reported(self):
+        return self.reported
+
     def __str__(self):
         return self.get_comment_prefix() + ' (' + self.user.username + ')'
 

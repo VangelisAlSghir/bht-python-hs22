@@ -1,17 +1,19 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Kommentare entfernen{% endblock %}
+{% block title %}Gemeldete Kommentare entfernen{% endblock %}
 
 {% block content %}
-<h2>Kommentare entfernen</h2>
+<h2>Gemeldete Kommentare entfernen</h2>
     {% if not can_delete %}
-        Du bist nicht autorisiert, um Kommentare zu entfernen.<br><br>
+        Du bist nicht autorisiert, um gemeldete Kommentare zu entfernen.<br><br>
     {% endif %}
 
     {% for comment in all_the_comments %}
-        <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
-        {{ comment.text }}<br>
+        {% if comment.is_reported %}
+            <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
+            {{ comment.text }}<br>
+        {% endif %}
 
         {% if can_delete %}
             <form method="POST">
