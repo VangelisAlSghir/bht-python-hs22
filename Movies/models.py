@@ -44,6 +44,14 @@ class Movie(models.Model):
     def __repr__(self):
         return self.name + ' / ' + self.user + ' / ' + self.creation_date
 
+    def average_rating(self):
+        ratings = ProductReview.objects.filter(movie=self)
+        if len(ratings) == 0:
+            return 0
+
+        ratingstars = sum(rating.rating for rating in ratings)
+        return round(ratingstars / len(ratings) * 2) / 2
+
 
 class ProductReview(models.Model):
     text = models.TextField(max_length=500)
