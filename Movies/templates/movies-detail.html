@@ -35,14 +35,6 @@
         <td><b>PDF:</b></td>
         <td><a target="_blank" href="/{{ selected_movie.pdf }}">Herunterladen</a></td>
     </tr>
-{#    <tr>#}
-{#        <td><b>Hinzugefügt am:</b></td>#}
-{#        <td>{{ selected_movie.creation_date }}<br></td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td><b>Hinzugefügt von:</b></td>#}
-{#        <td>{{ selected_movie.user }}<br></td>#}
-{#    </tr>#}
     {% if user.isStaff %}
     <tr>
         <td></td>
@@ -50,6 +42,17 @@
     </tr>
     {% endif %}
     </table>
+
+    {% if user.is_authenticated %}
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="add_to_cart">Zum Warenkorb hinzufügen</button>
+        </form>
+    {% else %}
+        <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
+        <br>
+    {%  endif %}
 
     {% for review in selected_movie_reviews %}
         <span style="color: darkgreen">Hilfreich: {{ review.get_upvotes_count }}</span>
@@ -77,7 +80,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit">Speichern</button>
+        <button type="submit" name="add_comment">Speichern</button>
     </form>
     {% endif %}
     <br>

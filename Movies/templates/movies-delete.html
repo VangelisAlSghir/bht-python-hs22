@@ -7,7 +7,7 @@
 
 {% block title %}Film löschen{% endblock %}
 
-{% block logged_in_content %}
+{% block content %}
 <h2>Film löschen</h2>
     <form method="POST">
         {% csrf_token %}
@@ -15,9 +15,10 @@
         <a href="{% url 'movies-detail' selected_movie.id %}"><button type="button">Nein</button></a>
         <button type="submit">Ja</button>
     </form>
+
+    {% if not user.can_delete %}
+        <p>Du musst angemeldet sein, um ein Film löschen zu können</p>
+        <a href="{% url 'login' %}">Anmelden</a>
+    {% endif %}
 {% endblock %}
 
-{% block not_logged_in_content %}
-    <p>Du musst angemeldet sein, um ein Film löschen zu können</p>
-    <a href="{% url 'login' %}">Anmelden</a>
-{% endblock %}
