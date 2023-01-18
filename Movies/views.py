@@ -78,6 +78,28 @@ def movie_create(request):
         context = {'form': empty_form, 'fsk_categories': fsk}
         return render(request, 'movies-create.html', context)
 
+def movie_edit(request, **kwargs):
+    if not request.user.is_staff and not request.user.is_superuser:
+        return redirect('movies-list')
+
+    movie_id = kwargs['pk']
+
+    movie = Movie.objects.get(id=movie_id)
+
+    if request.method == 'POST':
+        filled_form = MovieForm(request.POST, request.FILES, instance=movie)
+        if filled_form.is_valid():
+            filled_form.save()
+        else:
+            pass
+
+        return redirect('movies-list')
+    else:
+        empty_form = MovieForm(instance=movie)
+        fsk = Movie.FSK_CATEGORIES
+        context = {'form': empty_form, 'fsk_categories': fsk}
+        return render(request, 'movies-edit.html', context)
+
 
 def movie_delete(request, **kwargs):
     movie_id = kwargs['pk']

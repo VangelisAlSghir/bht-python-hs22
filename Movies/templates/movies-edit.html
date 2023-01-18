@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
+{% endblock %}
+
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+{% endblock %}
+
+<body>
+{% block content %}
+<h2 class="mx-5">Film bearbeiten</h2>
+    <form class="list-group mx-5 mt-2 border rounded" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <li class="list-group-item list-group-item-dark">
+            <label for="{{ form.name.id_for_label }}">Name:</label>
+            <input id="{{ form.name.id }}" value="{{ form.name.value }}" type="text" name="name" required>
+        </li>
+        <li class="list-group-item list-group-item-dark">
+            <label for="{{ form.description.id_for_label }}">Beschreibung:</label>
+            <input id="{{ form.description.id }}" value="{{ form.description.value }}" type="text" name="description">
+        </li>
+        <li class="list-group-item list-group-item-dark">
+            {{ form.genre.label }}: {{ form.genre }}
+        </li>
+        <li class="list-group-item list-group-item-dark">
+            {{ form.fsk.label }}: {{ form.fsk }}
+        </li>
+        <li class="list-group-item list-group-item-dark">
+            <label>Bild:</label>
+            {{ form.image }}
+        </li>
+        <li class="list-group-item list-group-item-dark">
+            <label>PDF:</label>
+            {{ form.pdf }}
+        </li>
+        <li class="list-group-item list-group-item-dark">
+            <label for="{{ form.price.id_for_label }}">Preis:</label>
+            <input id="{{ form.price.id }}" value="{{ form.price.value }}" type="number" name="price">
+        </li>
+        <button class="button btn btn-dark" type="submit">Änderungen speichern</button>
+    </form>
+{% endblock %}
+</body>
