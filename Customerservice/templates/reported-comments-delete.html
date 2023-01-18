@@ -13,7 +13,7 @@
         {% if comment.is_reported %}
             <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
             {{ comment.text }}<br>
-        {% endif %}
+
 
         {% if can_delete %}
             <form method="POST">
@@ -24,6 +24,7 @@
         {% endif %}
 
         <br>
+        {% endif %}
     {% endfor %}
     <br>
 

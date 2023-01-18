@@ -8,6 +8,27 @@ from Movies.models import ProductReview
 from Movies.models import Movie
 
 
+class ReportedDeleteView(ListView):
+    model = ProductReview
+    context_object_name = 'all_the_comments'
+    template_name = 'reported-comments-delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ReportedDeleteView, self).get_context_data(**kwargs)
+        can_delete = False
+        user = self.request.user
+        if not user.is_anonymous:
+            can_delete = user.can_delete()
+        context['can_delete'] = can_delete
+        return context
+
+    def post(self, request, *args, **kwargs):
+        comment_id = request.POST['comment_id']
+        if 'delete' in request.POST:
+            ProductReview.objects.get(id=comment_id).delete()
+            return redirect('comment-delete')
+
+
 class CommentDeleteView(ListView):
     model = ProductReview
     context_object_name = 'all_the_comments'
