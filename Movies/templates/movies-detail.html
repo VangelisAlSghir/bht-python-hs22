@@ -12,47 +12,43 @@
 
 <body>
 {% block content %}
-<h2>Details über {{ selected_movie.name }}</h2>
+    <div class="card mx-auto" style="max-width: 50rem; background-color: #161616; border-color: darkred">
+        <img class="card-img-top img-fluid" src="/media/{{ selected_movie.image }}" alt="...">
+        <div class="card-body">
+            <div class="card-title text-center">
+                <h3>{{ selected_movie.name }}</h3>
 
-    <table>
-    <tr>
-        <td><b>Name:</b></td>
-        <td>{{ selected_movie.name }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Beschreibung:</b></td>
-        <td>{{ selected_movie.description }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Altersfreigabe:</b></td>
-        <td>{{ selected_movie.fsk }}</td>
-    </tr>
-    <tr>
-        <td><b>Bild:</b></td>
-        <td><img style="max-width: 300px; max-height: 300px;" src="/media/{{ selected_movie.image }}"></td>
-    </tr>
-    <tr>
-        <td><b>PDF:</b></td>
-        <td><a target="_blank" href="/{{ selected_movie.pdf }}">Herunterladen</a></td>
-    </tr>
-    {% if user.isStaff %}
-    <tr>
-        <td></td>
-        <td><a href="{% url 'movies-delete' selected_movie.id %}">Film löschen</a></td>
-    </tr>
-    {% endif %}
-    </table>
-
-    {% if user.is_authenticated %}
-        <br>
-        <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="add_to_cart">Zum Warenkorb hinzufügen</button>
-        </form>
-    {% else %}
-        <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
-        <br>
-    {%  endif %}
+            </div>
+            <p class="card-text">{{ selected_movie.description }}</p>
+            <p
+                class="card-text">Preis: {{ selected_movie.price }}€
+                <br>
+                Altersfreigabe: {{ selected_movie.fsk }}
+            </p>
+        </div>
+        <div class="card-body">
+            <button class="btn btn-secondary alignleft" target="_blank" href="/{{ selected_movie.pdf }}">Detaillierte Beschreibung</button>
+            {% if user.is_authenticated %}
+                <form class="btn btn-secondary alignright" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="add_to_cart">Zum Warenkorb hinzufügen</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a> to add to shopping cart
+            {%  endif %}
+            {% if user.isStaff %}
+                <button class="btn btn-secondary alignright mx-2" href="{% url 'movies-delete' selected_movie.id %}">Film löschen</button>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="card mx-auto" style="max-width: 50rem; background-color: #161616; border-color: darkred">
+      <ul class="list-group list-group-flush" style="background-color: #161616">
+        <li class="list-group-item color">An item</li>
+        <li class="list-group-item color">A second item</li>
+        <li class="list-group-item color">A third item</li>
+      </ul>
+    </div>
 
     {% for review in selected_movie_reviews %}
         <span style="color: darkgreen">Hilfreich: {{ review.get_upvotes_count }}</span>
