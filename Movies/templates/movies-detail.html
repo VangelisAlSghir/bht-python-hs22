@@ -12,7 +12,7 @@
 
 <body>
 {% block content %}
-    <div class="card mx-auto" style="max-width: 50rem; background-color: #161616; border-color: darkred">
+    <div class="card mx-auto border border-danger" style="max-width: 50rem; background-color: #161616">
         <img class="card-img-top img-fluid" src="/media/{{ selected_movie.image }}" alt="...">
         <div class="card-body">
             <div class="card-title text-center">
@@ -21,69 +21,90 @@
             </div>
             <p class="card-text">{{ selected_movie.description }}</p>
             <p
-                class="card-text">Preis: {{ selected_movie.price }}€
+                    class="card-text">Preis: {{ selected_movie.price }}€
                 <br>
                 Altersfreigabe: {{ selected_movie.fsk }}
             </p>
         </div>
         <div class="card-body">
-            <button class="btn btn-secondary alignleft" target="_blank" href="/{{ selected_movie.pdf }}">Detaillierte Beschreibung</button>
+            <a class="btn btn-secondary alignleft" target="_blank" href="/{{ selected_movie.pdf }}">Detaillierte Beschreibung</a>
             {% if user.is_authenticated %}
-                <form class="btn btn-secondary alignright" method="POST">
+                <form class="alignright" method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="add_to_cart">Zum Warenkorb hinzufügen</button>
+                    <button class="btn btn-secondary" type="submit" name="add_to_cart">Zum Warenkorb hinzufügen</button>
                 </form>
             {% else %}
-                <a href="{% url 'login' %}">Login</a> to add to shopping cart
+                <a class="btn btn-secondary alignright" href="{% url 'login' %}">Anmelden</a>
             {%  endif %}
             {% if user.isStaff %}
-                <button class="btn btn-secondary alignright mx-2" href="{% url 'movies-delete' selected_movie.id %}">Film löschen</button>
+                <a class="btn btn-secondary alignright mx-2" href="{% url 'movies-delete' selected_movie.id %}">Film löschen</a>
             {% endif %}
         </div>
     </div>
     <br>
-    <div class="card mx-auto" style="max-width: 50rem; background-color: #161616; border-color: darkred">
-      <ul class="list-group list-group-flush" style="background-color: #161616">
-        <li class="list-group-item color">An item</li>
-        <li class="list-group-item color">A second item</li>
-        <li class="list-group-item color">A third item</li>
-      </ul>
-    </div>
-
-    {% for review in selected_movie_reviews %}
-        <span style="color: darkgreen">Hilfreich: {{ review.get_upvotes_count }}</span>
-        {% if user.is_authenticated %}
-        <a href="{% url 'comment-vote' selected_movie.id review.id 'up' %}" style="text-decoration: none">
-            <img src="{% static 'Movies/arrow_up.png' %}" height="20" width="20">
-        </a>
-        {% endif %}
-        <span style="color: crimson">Nicht hilfreich: {{ review.get_downvotes_count }}</span>
-        {% if user.is_authenticated %}
-        <a href="{% url 'comment-vote' selected_movie.id review.id 'down' %}" style="text-decoration: none">
-            <img src="{% static 'Movies/arrow_down.png' %}" height="20" width="20">
-        </a>
-        {% endif %}
-        <b style="color: darkgreen">{{ review.user.username }} am {{ review.timestamp }}</b>
-        <p>Bewertung: {{ review.rating }}</p>
-        <p>{{ review.text }}</p>
-        {% if review.user.id == current_user_id %}
-            <a href="{% url 'edit-review' selected_movie.id review.id %}">Bewertung bearbeiten</a>
-            <a href="{% url 'delete-review' selected_movie.id review.id %}">Bewertung löschen</a>
-        {% else %}
-            <a href="{% url 'report-review' selected_movie.id review.id %}">Produktbewertung melden</a><br/>
-        {% endif %}
-    {% endfor %}
-    <br>
-
-    {% if not user_has_rated %}
-    <b style="color: crimson">Produktbewertung schreiben</b><br>
-    <form method="POST">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit" name="add_comment">Speichern</button>
-    </form>
+    {% if number_of_selected_movie_reviews != 0 %}
+        <div class="card mx-auto border border-danger" style="max-width: 50rem; background-color: #161616">
+            <ul class="list-group list-group-flush" style="background-color: #161616">
+                {% for review in selected_movie_reviews %}
+                    <li class="list-group-item color">
+                        <div class="border-bottom border-danger">
+                            <span style="color: darkgreen">{{ review.get_upvotes_count }} </span>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'comment-vote' selected_movie.id review.id 'up' %}" style="text-decoration: none">
+                                    <img src="{% static 'Movies/arrow_up.png' %}" height="20" width="20">
+                                </a>
+                            {% else %}
+                                <img src="{% static 'Movies/arrow_up.png' %}" height="20" width="20">
+                            {% endif %}
+                            <span style="color: crimson">{{ review.get_downvotes_count }}</span>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'comment-vote' selected_movie.id review.id 'down' %}" style="text-decoration: none">
+                                    <img src="{% static 'Movies/arrow_down.png' %}" height="20" width="20">
+                                </a>
+                            {% else %}
+                                <img src="{% static 'Movies/arrow_down.png' %}" height="20" width="20">
+                            {% endif %}
+                            <b class="alignright" style="color: darkgreen">Gepostet von: {{ review.user.username }} am {{ review.timestamp }}</b>
+                            <p style="margin-top: 5px">Bewertung: {{ review.rating }} Sterne</p></div>
+                        <p style="margin-top: 1rem">{{ review.text }}</p>
+                        {% if review.user.id == current_user_id %}
+                            <a href="{% url 'edit-review' selected_movie.id review.id %}">Bewertung bearbeiten</a>
+                            <a href="{% url 'delete-review' selected_movie.id review.id %}">Bewertung löschen</a>
+                        {% else %}
+                            <a href="{% url 'report-review' selected_movie.id review.id %}">Produktbewertung melden</a><br/>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
     <br>
-    <a href="{% url 'movies-list' %}">Zurück zur Filmübersicht</a>
+    {% if not user_has_rated %}
+        <form class="list-group mx-auto" style="background-color: #161616; max-width: 50rem;" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <ul class="list-group list-group-horizontal" style="background-color: #161616; border-color: #dc3545; border-radius: inherit">
+                <li class="list-group-item" style="background-color: #161616">{{ comment_form.text }}</li>
+                <li class="list-group-item" style="background-color: #161616">
+                    <ul class="list-group list-group-flush my-2" style="background-color: #161616">
+                        <li class="list-group-item my-2" style="background-color: #161616">
+                            <h5 style="font-weight: bold; color: darkgreen">Produktbewertung schreiben</h5>
+                        </li>
+                        <li class="list-group-item my-2" style="background-color: #161616">
+                            <p style="font-weight: bold">STERNE: {{ comment_form.rating }}</p>
+                        </li>
+                        <li class="list-group-item my-2" style="background-color: #161616">
+                            <button class="btn btn-success" type="submit" name="add_comment">Speichern</button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </form>
+    {% endif %}
+    <div class="mx-auto" style="max-width: 50rem">
+        <a class="btn btn-dark" href="{% url 'movies-list' %}">
+            Zurück zur Filmübersicht
+        </a>
+    </div>
+    <br>
 {% endblock %}
 </body>

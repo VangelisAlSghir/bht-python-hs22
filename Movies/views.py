@@ -39,6 +39,7 @@ def movie_detail(request, **kwargs):
         ShoppingCart.add_item(myuser, selected_movie)
 
     reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
+    number_reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False).count()
 
     if request.user.is_authenticated:
         user_has_rated = reviews.filter(user=request.user).count() > 0
@@ -48,6 +49,7 @@ def movie_detail(request, **kwargs):
     context = {
         'selected_movie': selected_movie,
         'selected_movie_reviews': reviews,
+        'number_of_selected_movie_reviews': number_reviews,
         'comment_form': ProductReviewForm,
         'user_has_rated': user_has_rated,
         'current_user_id': request.user.id

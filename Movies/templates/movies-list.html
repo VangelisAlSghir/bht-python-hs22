@@ -11,30 +11,31 @@
 {% endblock %}
 
 <body>
-    {% block content %}
-        <div class="container">
+{% block content %}
+    <div class="container">
         <div class="row">
-        {% for movie in movies %}
-            <div class="col-sm m-2">
-                <a class="filmContainer" href="{{ movie.id }}/">
-                    <img class="filmImage img-fluid" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}" alt="Cover des Films \{{ movie.name }}\">
-                    <div class="middle">
-                        <div class="filmTitle"> {{ movie.name }} </div>
-                    </div>
-                </a>
-{% comment %}                <a class="text-center card" style="width: 18rem;">
+            {% for movie in movies %}
+                <div class="col-sm m-2">
+                    <a class="filmContainer" href="{{ movie.id }}/">
+                        <img class="filmImage img-fluid" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}" alt="Cover des Films \{{ movie.name }}\">
+                        <div class="middle">
+                            <div class="filmTitle"> {{ movie.name }} </div>
+                        </div>
+                    </a>
+                    {% comment %}                <a class="text-center card" style="width: 18rem;">
                     <img class="card-img-top" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.name }}</h5>
                   </div>
                 </a>{% endcomment %}
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
         </div>
         <br>
-    {% if user.isStaff %}
-        <a class="mx-2 button btn btn-dark" href="{% url 'movies-create' %}" role="button">Film hinzufügen</a>
-    {% endif %}
-        </div>
-    {% endblock %}
+        {% if user.isStaff %}
+            <a class="mx-2 btn btn-dark" href="{% url 'movies-create' %}" role="button">Film hinzufügen</a>
+        {% endif %}
+    </div>
+    <br>
+{% endblock %}
 </body>
