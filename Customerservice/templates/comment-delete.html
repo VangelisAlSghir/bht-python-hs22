@@ -4,24 +4,24 @@
 {% block title %}Kommentare entfernen{% endblock %}
 
 {% block content %}
-<h2>Kommentare entfernen</h2>
+    <h1 class="mx-auto" style="max-width: 50rem">Kommentare entfernen</h1>
     {% if not can_delete %}
         Du bist nicht autorisiert, um Kommentare zu entfernen.<br><br>
     {% endif %}
 
     {% for comment in all_the_comments %}
-        <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
-        {{ comment.text }}<br>
+        <div class="mx-auto p-2 border rounded" style="max-width: 50rem">
+            <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
+            <div class="my-2">{{ comment.text }}</div>
 
-        {% if can_delete %}
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" id="comment_id" name="comment_id" value="{{ comment.id }}">
-                <button type="submit" name="delete">Entfernen</button>
-            </form>
-        {% endif %}
-
-        <br>
+            {% if can_delete %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="comment_id" name="comment_id" value="{{ comment.id }}">
+                    <button class="btn btn-dark" type="submit" name="delete">Entfernen</button>
+                </form>
+            {% endif %}
+        </div>
     {% endfor %}
     <br>
 
