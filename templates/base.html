@@ -37,14 +37,14 @@
             <button class="btn btn-danger my-2 my-sm-0 no-border-radius-left" type="submit">Suchen</button>
         </form>
 
-        <button style="float: right;" class="btn btn-danger mx-2" href="{% url 'shopping-cart-show' %}">
+        <a style="float: right;" class="btn btn-danger mx-2" href="{% url 'shopping-cart-show' %}">
             Warenkorb
             {% if user.is_authenticated %}
                 <span class="badge badge-light">{{ request.user.count_shopping_cart_items }}</span>
             {% else %}
                 <span class="badge badge-light">0</span>
             {% endif %}
-        </button>
+        </a>
 
         {% if user.is_authenticated %}
         <div class="nav-item btn-group">

@@ -10,12 +10,10 @@ from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 
 
-
-
 # Create your views here.
 def movie_list(request):
     movies = Movie.objects.all()
-    context = { 'movies': movies }
+    context = {'movies': movies}
     return render(request, 'movies-list.html', context)
 
 
@@ -79,6 +77,7 @@ def movie_create(request):
         fsk = Movie.FSK_CATEGORIES
         context = {'form': empty_form, 'fsk_categories': fsk}
         return render(request, 'movies-create.html', context)
+
 
 def movie_edit(request, **kwargs):
     if not request.user.is_staff and not request.user.is_superuser:
@@ -178,5 +177,3 @@ class SearchResultsView(ListView):
         object_list = Movie.objects.filter(Q(name__icontains=query))
 
         return object_list
-
-

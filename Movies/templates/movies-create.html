@@ -12,8 +12,8 @@
 
 <body>
 {% block content %}
-<h2 class="mx-5">Film hinzufügen</h2>
-    <form class="list-group mx-5 mt-2 border rounded" method="POST" enctype="multipart/form-data">
+<h1 class="mx-auto" style="max-width: 50rem">Film hinzufügen</h1>
+    <form class="list-group mx-auto border rounded" style="max-width: 50rem" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
         <li class="list-group-item list-group-item-dark">
