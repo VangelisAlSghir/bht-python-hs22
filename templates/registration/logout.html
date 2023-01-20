@@ -1,8 +1,14 @@
 {% extends 'home.html' %}
 
-{% block title %}Abmeldung{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 {% block content %}
-    <p>Du wurdest erfolgreich abgemeldet.</p>
-    <a href="{% url 'login' %}">Erneut anmelden</a>
+    <br><br>
+    <div class="mx-auto" style="text-align: center">
+        <p style="font-weight: bold">Du wurdest erfolgreich abgemeldet.</p>
+        <a class="btn btn-dark" href="{% url 'login' %}">Erneut anmelden</a>
+    </div>
 {% endblock %}

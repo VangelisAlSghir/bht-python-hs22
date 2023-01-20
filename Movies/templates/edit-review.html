@@ -5,13 +5,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'Movies/style.css' %}">
 {% endblock %}
 
-{% block title %}Produktbewertung bearbeiten{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 {% block content %}
-<h2>Produktbewertung bearbeiten</h2>
-<form method="POST">
+<h1 class="mx-auto" style="max-width: 50rem">Produktbewertung bearbeiten</h1>
+<form class="mx-auto" style="max-width: 50rem" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Speichern</button>
+    {{ form.text }}
+    <br>
+    {{ form.rating }}
+    <button class="btn btn-dark" style="margin-left: 195px" type="submit">Speichern</button>
 </form>
 {% endblock %}

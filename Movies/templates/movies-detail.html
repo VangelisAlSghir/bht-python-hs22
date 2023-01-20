@@ -80,7 +80,7 @@
     {% endif %}
     <br>
     {% if not user_has_rated %}
-        <form class="list-group mx-auto" style="background-color: #161616; max-width: 50rem;" method="POST" enctype="multipart/form-data">
+        <form class="list-group mx-auto border border-danger" style="background-color: #161616; max-width: 50rem;" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <ul class="list-group list-group-horizontal" style="background-color: #161616; border-color: #dc3545; border-radius: inherit">
                 <li class="list-group-item" style="background-color: #161616">{{ comment_form.text }}</li>
@@ -100,6 +100,7 @@
             </ul>
         </form>
     {% endif %}
+    <br>
     <div class="mx-auto" style="max-width: 50rem">
         <a class="btn btn-dark" href="{% url 'movies-list' %}">
             Zurück zur Filmübersicht

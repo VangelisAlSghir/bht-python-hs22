@@ -1,13 +1,24 @@
 {% extends 'home.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 {% block content %}
-    <h2>Login</h2>
-    <form method="post">
+    <h1 class="mx-auto" style="max-width: 50rem">Login</h1>
+    <div class="mx-auto" style="max-width: 50rem">
+    <form style="max-width: 16rem" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <button class="btn btn-success" type="submit">Login</button>
     </form>
-    <p>Noch kein Konto? <a href="{% url "signup" %}">Registrier dich hier!</a></p>
+    <br>
+    <p class="mx-auto" style="max-width: 50rem">
+        Noch kein Konto?
+        <a class="btn btn-dark" href="{% url "signup" %}">
+            Registrier dich hier!
+        </a>
+    </p>
+    </div>
 {% endblock %}

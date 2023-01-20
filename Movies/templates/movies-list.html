@@ -7,7 +7,7 @@
 
 {% block title %}
     BestFlix</title>
-    <link rel="icon" type="image/x-icon" href="/media/title_image/BestFlix_small.png">
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
 {% endblock %}
 
 <body>
@@ -22,12 +22,6 @@
                             <div class="filmTitle"> {{ movie.name }} </div>
                         </div>
                     </a>
-                    {% comment %}                <a class="text-center card" style="width: 18rem;">
-                    <img class="card-img-top" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/{{ movie.image }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ movie.name }}</h5>
-                  </div>
-                </a>{% endcomment %}
                 </div>
             {% endfor %}
         </div>
