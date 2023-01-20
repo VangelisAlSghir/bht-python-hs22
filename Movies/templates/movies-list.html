@@ -10,8 +10,27 @@
     <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
 {% endblock %}
 
-<body>
 {% block content %}
+    <body>
+    <h1>Die besten Filme</h1>
+
+
+    <form method="GET" action="{% url 'movies-list' %}">
+        {% csrf_token %}
+      <label>Bewertungen:
+        <select name="sterne" size="5">
+          <option value="1">1 Stern</option>
+          <option value="2">2 Sterne</option>
+          <option value="3">3 Sterne</option>
+          <option value="4">4 Sterne</option>
+          <option value="5">5 Sterne</option>
+        </select>
+          <button class="btn btn-danger my-2 my-sm-0 no-border-radius-left" type="submit" name="search">Suchen</button>
+        </label>
+    </form>
+
+
+
     <div class="container">
         <div class="row">
             {% for movie in movies %}
@@ -31,5 +50,5 @@
         {% endif %}
     </div>
     <br>
+    </body>
 {% endblock %}
-</body>

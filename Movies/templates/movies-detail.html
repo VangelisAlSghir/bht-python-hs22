@@ -25,6 +25,7 @@
                 <br>
                 Altersfreigabe: {{ selected_movie.fsk }}
             </p>
+            <p>Bewertung: {{ rating }} </p>
         </div>
         <div class="card-body">
             <a class="btn btn-secondary alignleft" target="_blank" href="/{{ selected_movie.pdf }}">Detaillierte Beschreibung</a>
@@ -41,6 +42,14 @@
             {% endif %}
         </div>
     </div>
+
+             {#Suchfunktion hier wiederverwendet#}
+    <form class="form-inline my-2 my-lg-0" name="myform" method="GET" action="{% url 'movies-detail' selected_movie.id %}">
+            <input class="form-control no-border-radius-right" name="sucheKommentar" type="search" placeholder="Kommentare durchsuchen" aria-label="Search">
+            <button class="btn btn-danger my-2 my-sm-0 no-border-radius-left" type="submit" name="suchen">Suchen</button>
+    </form>
+
+
     <br>
     {% if number_of_selected_movie_reviews != 0 %}
         <div class="card mx-auto border border-danger" style="max-width: 50rem; background-color: #161616">
@@ -77,8 +86,13 @@
                 {% endfor %}
             </ul>
         </div>
+    {% else %}
+        <p>Keine Kommentare</p>
     {% endif %}
     <br>
+
+
+
     {% if not user_has_rated %}
         <form class="list-group mx-auto border border-danger" style="background-color: #161616; max-width: 50rem;" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
