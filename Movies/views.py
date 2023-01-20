@@ -10,18 +10,15 @@ from django.db.models import Q
 
 
 def movie_list(request):
-    if request.method == 'GET' in request.GET:
+    if request.method == 'GET' and 'search' in request.GET:
         query = request.GET.get("sterne")
-        movies = Movie.objects.all.filter(Q(rating=query))
+        movies = Movie.objects.filter(Q(rating__gte=query))
         context1 = {'movies': movies}
         return render(request, 'movies-list.html', context1)
 
     movies = Movie.objects.all()
     context = {'movies': movies}
     return render(request, 'movies-list.html', context)
-
-
-
 
 def movie_detail(request, **kwargs):
     movie_id = kwargs['pk']
@@ -65,8 +62,6 @@ def movie_detail(request, **kwargs):
             'current_user_id': request.user.id
         }
         return render(request, 'movies-detail.html', context1)
-
-
     rating = selected_movie.average_rating()
     context = {
         'rating': rating,
@@ -83,7 +78,6 @@ def movie_detail(request, **kwargs):
 def movie_create(request):
     if not request.user.is_staff and not request.user.is_superuser:
         return redirect('movies-list')
-
     if request.method == 'POST':
         filled_form = MovieForm(request.POST, request.FILES)
         filled_form.instance.user = request.user
@@ -95,7 +89,6 @@ def movie_create(request):
             filled_form.save()
         else:
             pass
-
         return redirect('movies-list')
     else:
         empty_form = MovieForm()
@@ -107,11 +100,8 @@ def movie_create(request):
 def movie_edit(request, **kwargs):
     if not request.user.is_staff and not request.user.is_superuser:
         return redirect('movies-list')
-
     movie_id = kwargs['pk']
-
     movie = Movie.objects.get(id=movie_id)
-
     if request.method == 'POST':
         filled_form = MovieForm(request.POST, request.FILES, instance=movie)
         if filled_form.is_valid():
