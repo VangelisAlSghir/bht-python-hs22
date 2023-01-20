@@ -9,7 +9,6 @@ from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 
 
-# Create your views here.
 def movie_list(request):
     if request.method == 'GET' in request.GET:
         query = request.GET.get("sterne")
@@ -17,7 +16,6 @@ def movie_list(request):
         context1 = {'movies': movies}
         return render(request, 'movies-list.html', context1)
 
-    print("Ich bin hier")
     movies = Movie.objects.all()
     context = {'movies': movies}
     return render(request, 'movies-list.html', context)
@@ -52,10 +50,10 @@ def movie_detail(request, **kwargs):
         ShoppingCart.add_item(myuser, selected_movie)
 
     #KOMMENTAR SUCHEN
-    if request.method == 'GET' in request.GET:
+    if request.method == 'GET' and 'suchen' in request.GET:
         query = request.GET.get("sucheKommentar")
-        searchedReviews = ProductReview.objects.filter(movie=selected_movie, deleted=False, text=query)
-        number_reviews = reviews.count()
+        searchedReviews = reviews.filter(Q(text__icontains=query))
+        number_reviews = searchedReviews.count()
         rating = selected_movie.average_rating()
         context1 = {
             'rating': rating,
@@ -66,10 +64,9 @@ def movie_detail(request, **kwargs):
             'user_has_rated': user_has_rated,
             'current_user_id': request.user.id
         }
-        return redirect(request, 'movies-detail.html', context1)
+        return render(request, 'movies-detail.html', context1)
 
 
-    #HIER SOLLTE ES STOPPEN
     rating = selected_movie.average_rating()
     context = {
         'rating': rating,
@@ -134,7 +131,6 @@ def movie_delete(request, **kwargs):
     movie_id = kwargs['pk']
     if not request.user.is_staff and not request.user.is_superuser:
         return redirect('movies-list')
-
     if request.method == 'POST':
         Movie.objects.get(id=movie_id).delete()
         return redirect('movies-list')
@@ -166,16 +162,13 @@ def vote(request, pk: str, pk_comment: str, up_or_down: str):
 
 def report_product_review(request, pk: str, pk_comment: str):
     comment = ProductReview.objects.get(id=int(pk_comment))
-
     comment.reported = True
     comment.save()
-
     return render(request, 'movies-reported.html', {'pk': pk})
 
 
 def delete_product_review(request, pk: str, pk_comment: str):
     comment = ProductReview.objects.get(id=int(pk_comment))
-
     comment.deleted = True
     comment.save()
     movie = Movie.objects.get(id=pk)
@@ -185,11 +178,11 @@ def delete_product_review(request, pk: str, pk_comment: str):
 
 def edit_review(request, pk: str, pk_comment: str):
     comment = ProductReview.objects.get(id=int(pk_comment))
-
     if request.method == 'POST':
         form = ProductReviewForm(request.POST, instance=comment)
         form.save()
-
+        movie = Movie.objects.get(id=pk)
+        movie.average_rating()
         return redirect('movies-detail', pk)
     else:
         form = ProductReviewForm(instance=comment)
@@ -200,9 +193,7 @@ def edit_review(request, pk: str, pk_comment: str):
 class SearchResultsView(ListView):
     model = Movie
     template_name = 'search_results.html'
-
     def get_queryset(self):
         query = self.request.GET.get("eingabe")
         object_list = Movie.objects.filter(Q(name__icontains=query))
-
         return object_list
