@@ -5,37 +5,29 @@ from django.views.generic import DeleteView
 from Movies.forms import MovieForm, ProductReviewForm
 from Shoppingcart.models import ShoppingCart
 from Movies.models import Movie, ProductReview, Vote
-
 from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 
 
 # Create your views here.
 def movie_list(request):
+    if request.method == 'GET' in request.GET:
+        query = request.GET.get("sterne")
+        movies = Movie.objects.all.filter(Q(rating=query))
+        context1 = {'movies': movies}
+        return render(request, 'movies-list.html', context1)
+
+    print("Ich bin hier")
     movies = Movie.objects.all()
     context = {'movies': movies}
     return render(request, 'movies-list.html', context)
 
 
+
+
 def movie_detail(request, **kwargs):
     movie_id = kwargs['pk']
     selected_movie = Movie.objects.get(id=movie_id)
-
-    if request.method == 'POST' and 'add_comment' in request.POST:
-        form = ProductReviewForm(request.POST)
-        form.instance.user = request.user
-        form.instance.movie = selected_movie
-
-        if form.is_valid():
-            form.save()
-        else:
-            print(form.errors)
-
-    # Add to shopping cart
-    if request.method == 'POST' and 'add_to_cart' in request.POST:
-        myuser = request.user
-        ShoppingCart.add_item(myuser, selected_movie)
-
     reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
     number_reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False).count()
 
@@ -44,7 +36,43 @@ def movie_detail(request, **kwargs):
     else:
         user_has_rated = True
 
+    # LEAVE PRODUCTREVIEW
+    if request.method == 'POST' and 'add_comment' in request.POST:
+        form = ProductReviewForm(request.POST)
+        form.instance.user = request.user
+        form.instance.movie = selected_movie
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+
+    # ADD TO SHOPPINGCART
+    if request.method == 'POST' and 'add_to_cart' in request.POST:
+        myuser = request.user
+        ShoppingCart.add_item(myuser, selected_movie)
+
+    #KOMMENTAR SUCHEN
+    if request.method == 'GET' in request.GET:
+        query = request.GET.get("sucheKommentar")
+        searchedReviews = ProductReview.objects.filter(movie=selected_movie, deleted=False, text=query)
+        number_reviews = reviews.count()
+        rating = selected_movie.average_rating()
+        context1 = {
+            'rating': rating,
+            'selected_movie': selected_movie,
+            'selected_movie_reviews': searchedReviews,
+            'number_of_selected_movie_reviews': number_reviews,
+            'comment_form': ProductReviewForm,
+            'user_has_rated': user_has_rated,
+            'current_user_id': request.user.id
+        }
+        return redirect(request, 'movies-detail.html', context1)
+
+
+    #HIER SOLLTE ES STOPPEN
+    rating = selected_movie.average_rating()
     context = {
+        'rating': rating,
         'selected_movie': selected_movie,
         'selected_movie_reviews': reviews,
         'number_of_selected_movie_reviews': number_reviews,
@@ -150,7 +178,8 @@ def delete_product_review(request, pk: str, pk_comment: str):
 
     comment.deleted = True
     comment.save()
-
+    movie = Movie.objects.get(id=pk)
+    movie.average_rating()
     return render(request, 'movie-review-deleted.html', {'pk': pk})
 
 

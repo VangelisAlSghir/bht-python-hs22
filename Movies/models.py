@@ -37,6 +37,7 @@ class Movie(models.Model):
                              related_name='users',
                              related_query_name='user',
                              )
+    rating = models.FloatField(default=0)
 
     def __str__(self):
         return self.name + ' (' + self.user + ')'
@@ -48,10 +49,11 @@ class Movie(models.Model):
         ratings = ProductReview.objects.filter(movie=self)
         if len(ratings) == 0:
             return 0
-
-        ratingstars = sum(rating.rating for rating in ratings)
-        return round(ratingstars / len(ratings) * 2) / 2
-
+        x = 0
+        for r in ratings:
+            x = x+r.rating
+        rating = x/len(ratings)
+        return rating
 
 class ProductReview(models.Model):
     text = models.TextField(max_length=500)
