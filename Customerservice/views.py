@@ -68,4 +68,4 @@ class MovieDeleteView(ListView):
         movie_id = request.POST['movie_id']
         if 'delete' in request.POST:
             Movie.objects.get(id=movie_id).delete()
-            return redirect('comment-delete')
+            return redirect('movies-delete')
