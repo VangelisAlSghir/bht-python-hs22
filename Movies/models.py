@@ -37,7 +37,6 @@ class Movie(models.Model):
                              related_name='users',
                              related_query_name='user',
                              )
-    rating = models.FloatField(default=0)
 
     def __str__(self):
         return self.name + ' (' + self.user + ')'

@@ -10,13 +10,19 @@ from django.db.models import Q
 
 
 def movie_list(request):
+    movies = Movie.objects.all()
+
     if request.method == 'GET' and 'search' in request.GET:
-        query = request.GET.get("sterne")
-        movies = Movie.objects.filter(Q(rating__gte=query))
-        context1 = {'movies': movies}
+        query = int(request.GET.get("sterne"))
+        # movies = Movie.objects.filter(Q(rating__gte=query))
+        filtered_movies = []
+        for movie in movies:
+            movie_rating = movie.average_rating()
+            if (query - 0.5) <= movie_rating <= (query + 0.5):
+                filtered_movies.append(movie)
+        context1 = {'movies': filtered_movies}
         return render(request, 'movies-list.html', context1)
 
-    movies = Movie.objects.all()
     context = {'movies': movies}
     return render(request, 'movies-list.html', context)
 
