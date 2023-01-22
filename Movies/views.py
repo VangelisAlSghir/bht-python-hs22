@@ -14,7 +14,7 @@ def movie_list(request):
 
     if request.method == 'GET' and 'search' in request.GET:
         query = int(request.GET.get("sterne"))
-        # movies = Movie.objects.filter(Q(rating__gte=query))
+        # movies = Movie.objects.filter(Q(rating__lte=query))
         filtered_movies = []
         for movie in movies:
             movie_rating = movie.average_rating()
