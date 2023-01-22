@@ -11,8 +11,7 @@
 
     {% for comment in all_the_comments %}
         {% if comment.is_reported %}
-            <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }} </b><br>
-            <b style="color: #292929"> (ID = {{ comment.id }})</b><br>
+            <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
             {{ comment.text }}<br>
 
 

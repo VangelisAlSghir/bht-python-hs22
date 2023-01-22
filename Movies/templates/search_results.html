@@ -11,20 +11,24 @@
 {% endblock %}
 
 {% block listcontent %}
-<body class="movies_list">
+    <body class="movies_list">
     {% block content %}
-        <div class="movie-container">
-        {% for movie in object_list %}
-            <div class="movie-element">
-                <a href="/movies/show/{{ movie.id }}/">
-                    <img style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}">
-                    <p>
-                    {{ movie.name }}
-                    </p>
-                </a>
+        <h1 style="margin-left: 6rem">Suchergebnisse</h1>
+        <div class="container">
+            <div class="row">
+                {% for movie in object_list %}
+                    <div class="col-sm m-2">
+                        <a class="filmContainer" href="{{ movie.id }}/">
+                            <img class="filmImage img-fluid" style="max-width: 300px; max-height: 300px; display: inline-block;" src="/media/{{ movie.image }}" alt="Cover des Films \{{ movie.name }}\">
+                            <div class="middle">
+                                <div class="filmTitle"> {{ movie.name }} </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
         </div>
+        <br>
     {% endblock %}
-</body>
+    </body>
 {% endblock %}

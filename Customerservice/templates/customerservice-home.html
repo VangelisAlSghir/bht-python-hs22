@@ -1,10 +1,16 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Kunden-Service-Portal{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 {% block content %}
-<h2>Kunden-Service-Portal</h2>
-        <p><a href="{%  url 'comment-delete' %}"> Kommentare entfernen</a></p>
-        <p><a href="{%  url 'reported-comments-delete' %}"> Gemeldete Kommentare entfernen</a></p>
+    <h1 class="mx-auto" style="max-width: 50rem">Kunden-Service-Portal</h1>
+    <br>
+    <div class="mx-auto" style="max-width: 50rem">
+        <a class="btn btn-dark" href="{%  url 'comment-delete' %}"> Kommentare entfernen</a>
+        <a class="btn btn-dark" href="{%  url 'reported-comments-delete' %}"> Gemeldete Kommentare entfernen</a>
+    </div>
 {% endblock %}

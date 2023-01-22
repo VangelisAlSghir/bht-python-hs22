@@ -1,10 +1,13 @@
 {% extends 'home.html' %}
 
-{% block title %}Benutzerdaten ändern{% endblock %}
+{% block title %}
+    BestFlix</title>
+    <link rel="icon" type="image/x-icon" href="static/media/title_image/BestFlix_small.png">
+{% endblock %}
 
 {% block content %}
-    <h2>Benutzerdaten ändern</h2>
-    <form method="post" enctype="multipart/form-data">
+    <h1 class="mx-auto" style="max-width: 50rem;">Benutzerdaten ändern</h1>
+    <form class="mx-auto" style="max-width: 50rem;" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>Wenn Felder leer gelassen werden, bleiben die derzeitigen Daten erhalten.</p>
         <p>
@@ -14,13 +17,14 @@
         <p>
             <label>Aktuelles Profilbild</label>
             {% if image %}
-                <img src="{{ image.url }}">
+                <img class="img-fluid mx-auto" style="max-width: 50rem;" src="{{ image.url }}">
             {% endif %}
         </p>
         <p>
             <label>Neues Profilbild auswählen:</label>
             <input id="{{ form.image.id }}" type="file" name="image">
         </p>
-        <button type="submit">Änderungen speichern</button>
+        <button class="btn btn-dark" type="submit">Änderungen speichern</button>
     </form>
+    <br>
 {% endblock %}
