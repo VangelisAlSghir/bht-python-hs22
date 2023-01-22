@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block content %}
-<h2>Gemeldete Bewertungen entfernen</h2>
+<h1 class="mx-auto" style="max-width: 50rem">Gemeldete Bewertungen entfernen</h1>
+    <div class="mx-auto" style="max-width: 50rem">
     {% if not can_delete %}
         Du bist nicht autorisiert, um gemeldete Bewertungen zu entfernen.<br><br>
     {% endif %}
@@ -29,6 +30,7 @@
         <br>
         {% endif %}
     {% endfor %}
+    </div>
     <br>
 
 {% endblock %}

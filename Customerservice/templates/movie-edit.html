@@ -12,7 +12,7 @@
 
 <body>
 {% block content %}
-<h2 class="mx-5">Film bearbeiten</h2>
+<h1 class="mx-5">Film bearbeiten</h1>
     <form class="list-group mx-5 mt-2 border rounded" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}

@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block content %}
-<h2>Bewertungen entfernen</h2>
+<h1 class="mx-auto" style="max-width: 50rem">Bewertungen entfernen</h1>
+    <div class="mx-auto" style="max-width: 50rem">
     {% if not can_delete %}
         Du bist nicht autorisiert, um Bewertungen zu entfernen.<br><br>
     {% endif %}
@@ -23,12 +24,13 @@
             <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" id="review_id" name="review_id" value="{{ review.id }}">
-                <button type="submit" name="delete">Entfernen</button>
+                <button class="btn btn-dark mt-1" type="submit" name="delete">Entfernen</button>
             </form>
         {% endif %}
 
         <br>
     {% endfor %}
+    </div>
     <br>
 
 {% endblock %}

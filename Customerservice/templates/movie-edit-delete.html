@@ -7,25 +7,27 @@
 {% endblock %}
 
 {% block content %}
-<h2>Filme entfernen/bearbeiten</h2>
+<h1 class="mx-auto" style="max-width: 50rem">Filme entfernen/bearbeiten</h1>
     {% if not can_delete %}
-        Du bist nicht autorisiert, um Filme zu entfernen/bearbeiten.<br><br>
+        <p class="mx-auto" style="max-width: 50rem">Du bist nicht autorisiert, um Filme zu entfernen/bearbeiten.</p><br><br>
     {% endif %}
 
+    <div class="mx-auto" style="max-width: 50rem">
     {% for movie in all_the_movies %}
-        {{ movie.name }} <br>
+        <div style="font-weight: bolder; font-size: x-large">{{ movie.name }}</div>
 
         {% if can_delete %}
             <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" id="movie_id" name="movie_id" value="{{ movie.id }}">
-                <input type="button" onclick="window.location.href='{% url 'movie-edit' movie.id %}';" value="Bearbeiten" />
-                <button type="submit" name="delete">Entfernen</button>
+                <input class="btn btn-dark" type="button" onclick="window.location.href='{% url 'movie-edit' movie.id %}';" value="Bearbeiten" />
+                <button class="btn btn-danger" type="submit" name="delete">Entfernen</button>
             </form>
         {% endif %}
 
         <br>
     {% endfor %}
+    </div>
     <br>
 
 {% endblock %}

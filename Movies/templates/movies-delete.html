@@ -9,18 +9,22 @@
     BestFlix</title>
     <link rel="icon" type="image/png" href="/static/title_image/BestFlix_small.png">
 {% endblock %}
+
 {% block content %}
-<h2>Film löschen</h2>
+<h1 class="mx-auto" style="max-width: 50rem">Film löschen</h1>
+    <div class="mx-auto" style="max-width: 50rem">
     <form method="POST">
         {% csrf_token %}
         <p>Willst du den Film "{{ selected_movie.name }}" wirklich löschen?</p>
-        <a href="{% url 'movies-detail' selected_movie.id %}"><button type="button">Nein</button></a>
-        <button type="submit">Ja</button>
+        <a href="{% url 'movies-detail' selected_movie.id %}">
+        <button class="btn btn-danger" type="button">Nein</button></a>
+        <button class="btn btn-success" type="submit">Ja</button>
     </form>
 
     {% if not user.can_delete %}
         <p>Du musst angemeldet sein, um ein Film löschen zu können</p>
-        <a href="{% url 'login' %}">Anmelden</a>
+        <a class="btn btn-dark" href="{% url 'login' %}">Anmelden</a>
     {% endif %}
+    </div>
 {% endblock %}
 
