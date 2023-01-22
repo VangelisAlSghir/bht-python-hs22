@@ -10,7 +10,7 @@ class ShoppingCart(models.Model):
                                on_delete=models.CASCADE,
                                )
 
-    def add_item(myuser, movie):
+    def add_item(myuser, computer):
         # Get existing shopping cart, or create a new one if none exists
         shopping_carts = ShoppingCart.objects.filter(myuser=myuser)
         if shopping_carts:
@@ -18,10 +18,11 @@ class ShoppingCart(models.Model):
         else:
             shopping_cart = ShoppingCart.objects.create(myuser=myuser)
 
-        # Add movie to shopping cart
-        product_id = movie.id
-        product_name = movie.name
-        price = movie.price
+        # Add computer to shopping cart
+        product_id = computer.id
+        product_name = computer.get_brand_display() + ' ' + computer.get_type_display() + ' / ' \
+                       + str(computer.memory) + ' Gb / ' + computer.get_operating_system_display()
+        price = computer.price
         ShoppingCartItem.objects.create(product_id=product_id,
                                         product_name=product_name,
                                         price=price,

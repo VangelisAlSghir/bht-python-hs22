@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from datetime import date, datetime
+from Shoppingcart.models import ShoppingCart
+
 
 # Create your models here.
 
@@ -26,6 +28,15 @@ class DefaultUser(AbstractUser):
                             default='CU',
                             )
 
+    def count_shopping_cart_items(self):
+        count = 0
+        if self.is_authenticated:
+            shopping_carts = ShoppingCart.objects.filter(myuser=self)
+            if shopping_carts:
+                shopping_cart = shopping_carts.first()
+                count = shopping_cart.get_number_of_items()
+
+        return count
     def can_delete(self):
         return self.is_superuser_or_staff()
 

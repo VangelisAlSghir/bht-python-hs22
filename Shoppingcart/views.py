@@ -66,5 +66,5 @@ def pay(request):
 
     context = {'shopping_cart_is_empty': shopping_cart_is_empty,
                'payment_form': form,
-               'paid': paid}
+               'paid': paid,}
     return render(request, 'pay.html', context)
