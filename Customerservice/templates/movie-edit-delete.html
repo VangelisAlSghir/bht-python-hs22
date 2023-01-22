@@ -1,12 +1,12 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Filme entfernen{% endblock %}
+{% block title %}Filme entfernen/bearbeiten{% endblock %}
 
 {% block content %}
-<h2>Filme entfernen</h2>
+<h2>Filme entfernen/bearbeiten</h2>
     {% if not can_delete %}
-        Du bist nicht autorisiert, um Filme zu entfernen.<br><br>
+        Du bist nicht autorisiert, um Filme zu entfernen/bearbeiten.<br><br>
     {% endif %}
 
     {% for movie in all_the_movies %}
@@ -15,7 +15,8 @@
         {% if can_delete %}
             <form method="POST">
                 {% csrf_token %}
-                <input type="hidden" id="movie_id" name="mvoie_id" value="{{ comment.id }}">
+                <input type="hidden" id="movie_id" name="movie_id" value="{{ movie.id }}">
+                <input type="button" onclick="window.location.href='{% url 'movie-edit' movie.id %}';" value="Bearbeiten" />
                 <button type="submit" name="delete">Entfernen</button>
             </form>
         {% endif %}

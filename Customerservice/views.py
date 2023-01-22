@@ -53,7 +53,7 @@ class ReviewDeleteView(ListView):
 class MovieDeleteView(ListView):
     model = Movie
     context_object_name = 'all_the_movies'
-    template_name = 'movie-delete-list.html'
+    template_name = 'movie-edit-delete.html'
 
     def get_context_data(self, **kwargs):
         context = super(MovieDeleteView, self).get_context_data(**kwargs)
