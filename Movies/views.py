@@ -30,13 +30,6 @@ def movie_list(request):
 def movie_detail(request, **kwargs):
     movie_id = kwargs['pk']
     selected_movie = Movie.objects.get(id=movie_id)
-    reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
-    number_reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False).count()
-
-    if request.user.is_authenticated:
-        user_has_rated = reviews.filter(user=request.user).count() > 0
-    else:
-        user_has_rated = True
 
     # LEAVE PRODUCTREVIEW
     if request.method == 'POST' and 'add_comment' in request.POST:
@@ -47,6 +40,14 @@ def movie_detail(request, **kwargs):
             form.save()
         else:
             print(form.errors)
+
+    reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False)
+    number_reviews = ProductReview.objects.filter(movie=selected_movie, deleted=False).count()
+
+    if request.user.is_authenticated:
+        user_has_rated = reviews.filter(user=request.user).count() > 0
+    else:
+        user_has_rated = True
 
     # ADD TO SHOPPINGCART
     if request.method == 'POST' and 'add_to_cart' in request.POST:
@@ -130,7 +131,7 @@ def movie_delete(request, **kwargs):
         return redirect('movies-list')
     if request.method == 'POST':
         Movie.objects.get(id=movie_id).delete()
-        return redirect('movies-list')
+        return redirect('movie-edit-delete')
     else:
         selected_movie = Movie.objects.get(id=movie_id)
         context = {'selected_movie': selected_movie}
