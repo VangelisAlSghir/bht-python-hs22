@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Filme entfernen{% endblock %}
+
+{% block content %}
+<h2>Filme entfernen</h2>
+    {% if not can_delete %}
+        Du bist nicht autorisiert, um Filme zu entfernen.<br><br>
+    {% endif %}
+
+    {% for movie in all_the_movies %}
+        {{ movie.name }} <br>
+
+        {% if can_delete %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="movie_id" name="mvoie_id" value="{{ comment.id }}">
+                <button type="submit" name="delete">Entfernen</button>
+            </form>
+        {% endif %}
+
+        <br>
+    {% endfor %}
+    <br>
+
+{% endblock %}

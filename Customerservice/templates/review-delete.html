@@ -1,0 +1,31 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Bewertungen entfernen{% endblock %}
+
+{% block content %}
+<h2>Bewertungen entfernen</h2>
+    {% if not can_delete %}
+        Du bist nicht autorisiert, um Bewertungen zu entfernen.<br><br>
+    {% endif %}
+
+    {% for review in all_the_reviews %}
+        <b style="color: darkred">Bewertung zu {{ review.movie.name }} von {{ review.user.username }} am {{ review.timestamp }}</b><br>
+        {% if review.is_reported %}
+            <b style="color: red">Diese Bewertung wurde gemeldet!</b><br>
+        {% endif %}
+        {{ review.text }}<br>
+
+        {% if can_delete %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="review_id" name="review_id" value="{{ review.id }}">
+                <button type="submit" name="delete">Entfernen</button>
+            </form>
+        {% endif %}
+
+        <br>
+    {% endfor %}
+    <br>
+
+{% endblock %}

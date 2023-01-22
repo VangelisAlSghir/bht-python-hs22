@@ -20,6 +20,7 @@ def movie_list(request):
     context = {'movies': movies}
     return render(request, 'movies-list.html', context)
 
+
 def movie_detail(request, **kwargs):
     movie_id = kwargs['pk']
     selected_movie = Movie.objects.get(id=movie_id)
@@ -183,6 +184,7 @@ def edit_review(request, pk: str, pk_comment: str):
 class SearchResultsView(ListView):
     model = Movie
     template_name = 'search_results.html'
+
     def get_queryset(self):
         query = self.request.GET.get("eingabe")
         object_list = Movie.objects.filter(Q(name__icontains=query))

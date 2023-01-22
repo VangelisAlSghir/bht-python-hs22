@@ -10,8 +10,8 @@ from Movies.models import Movie
 
 class ReportedDeleteView(ListView):
     model = ProductReview
-    context_object_name = 'all_the_comments'
-    template_name = 'reported-comments-delete.html'
+    context_object_name = 'all_the_reviews'
+    template_name = 'reported-reviews-delete.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReportedDeleteView, self).get_context_data(**kwargs)
@@ -23,19 +23,19 @@ class ReportedDeleteView(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        comment_id = request.POST['comment_id']
+        review_id = request.POST['review_id']
         if 'delete' in request.POST:
-            ProductReview.objects.get(id=comment_id).delete()
-            return redirect('comment-delete')
+            ProductReview.objects.get(id=review_id).delete()
+            return redirect('review-delete')
 
 
-class CommentDeleteView(ListView):
+class ReviewDeleteView(ListView):
     model = ProductReview
-    context_object_name = 'all_the_comments'
-    template_name = 'comment-delete.html'
+    context_object_name = 'all_the_reviews'
+    template_name = 'review-delete.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CommentDeleteView, self).get_context_data(**kwargs)
+        context = super(ReviewDeleteView, self).get_context_data(**kwargs)
         can_delete = False
         user = self.request.user
         if not user.is_anonymous:
@@ -44,20 +44,19 @@ class CommentDeleteView(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        comment_id = request.POST['comment_id']
+        review_id = request.POST['review_id']
         if 'delete' in request.POST:
-            ProductReview.objects.get(id=comment_id).delete()
+            ProductReview.objects.get(id=review_id).delete()
             return redirect('comment-delete')
 
 
-class CommentEditView(UpdateView):
-    model = ProductReview
-    form_class = CommentEditForm
-    template_name = 'comment-edit.html'
-    success_url = reverse_lazy('comment-delete')
+class MovieDeleteView(ListView):
+    model = Movie
+    context_object_name = 'all_the_movies'
+    template_name = 'movie-delete-list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CommentEditView, self).get_context_data(**kwargs)
+        context = super(MovieDeleteView, self).get_context_data(**kwargs)
         can_delete = False
         user = self.request.user
         if not user.is_anonymous:
@@ -65,33 +64,8 @@ class CommentEditView(UpdateView):
         context['can_delete'] = can_delete
         return context
 
-
-def comment_edit_delete(request, pk: str):
-    comment_id = pk
-    if request.method == 'POST':
-        print('-------------', request.POST)
-        if 'edit' in request.POST:
-            form = CommentEditForm(request.POST)
-            if form.is_valid():
-                comment = ProductReview.objects.get(id=comment_id)
-                new_text = form.cleaned_data['text']
-                comment.text = new_text
-                comment.save()
-        elif 'delete' in request.POST:
-            ProductReview.objects.get(id=comment_id).delete()
-
-        return redirect('comment-delete')
-
-    else:
-        can_delete = False
-        user = request.user
-        if not user.is_anonymous:
-            can_delete = user.can_delete()
-        comment = ProductReview.objects.get(id=comment_id)
-        form = CommentEditForm(request.POST or None, instance=comment)
-        context = {'form': form,
-                   'can_delete': can_delete,
-                   'comment': comment,
-                  }
-        return render(request, 'comment-edit-delete.html', context)
-
+    def post(self, request, *args, **kwargs):
+        movie_id = request.POST['movie_id']
+        if 'delete' in request.POST:
+            Movie.objects.get(id=movie_id).delete()
+            return redirect('comment-delete')
