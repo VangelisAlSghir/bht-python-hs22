@@ -9,7 +9,10 @@
         Du bist nicht autorisiert, um Kommentare zu editieren.<br><br>
     {% endif %}
 
-    <b style="color: darkgreen">{{ comment.myuser.username }} on {{ comment.timestamp }}</b><br>
+    <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
+    {% if comment.is_reported %}
+        <b style="color: red">Dieser Kommentar wurde gemeldet!</b><br>
+    {% endif %}
     {% if can_delete %}
         <form method="POST">
             {% csrf_token %}
