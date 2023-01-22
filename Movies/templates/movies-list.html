@@ -12,23 +12,24 @@
 
 {% block content %}
     <body>
-    <form method="GET" action="{% url 'movies-list' %}">
-        {% csrf_token %}
-      <label>Bewertungen:
-        <select name="sterne" size="5">
-          <option value="1">1 Stern</option>
-          <option value="2">2 Sterne</option>
-          <option value="3">3 Sterne</option>
-          <option value="4">4 Sterne</option>
-          <option value="5">5 Sterne</option>
-        </select>
-          <button class="btn btn-danger my-2 my-sm-0" type="submit" name="search">Filtern</button>
-        </label>
-    </form>
-
-
-
-    <div class="container">
+    <div class="container" style="margin-left: 5rem; margin-right: 5rem">
+        <form class="mx-2" method="GET" action="{% url 'movies-list' %}">
+            {% csrf_token %}
+            <div class="dropdown alignleft">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Sterne
+                </button>
+                <select name="sterne" size="5" class="dropdown-menu">
+                    <option class="dropdown-item" value="1">1 Stern</option>
+                    <option class="dropdown-item" value="2">2 Sterne</option>
+                    <option class="dropdown-item" value="3">3 Sterne</option>
+                    <option class="dropdown-item" value="4">4 Sterne</option>
+                    <option class="dropdown-item" value="5">5 Sterne</option>
+                </select>
+            </div>
+            <button class="btn btn-danger mx-1 my-2 my-sm-0" type="submit" name="search">Filtern</button>
+        </form>
+    <br>
         <div class="row">
             {% for movie in movies %}
                 <div class="col-sm m-2">
