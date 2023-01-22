@@ -24,7 +24,7 @@
                 <br>
                 Altersfreigabe: {{ selected_movie.fsk }}
             </p>
-            <p>Bewertung: {{ rating }} </p>
+            <p>Bewertung: {% if rating > 0 %}{{ rating }}{% else %}Bisher keine Bewertungen{% endif %} </p>
         </div>
         <div class="card-body">
             <a class="btn btn-secondary alignleft" target="_blank" href="/media/{{ selected_movie.pdf }}">Detaillierte Beschreibung</a>

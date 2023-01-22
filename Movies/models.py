@@ -45,7 +45,7 @@ class Movie(models.Model):
         return self.name + ' / ' + self.user + ' / ' + self.creation_date
 
     def average_rating(self):
-        ratings = ProductReview.objects.filter(movie=self)
+        ratings = ProductReview.objects.filter(movie=self, deleted=False)
         if len(ratings) == 0:
             return 0
         x = 0
