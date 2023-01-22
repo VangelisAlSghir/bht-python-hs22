@@ -11,6 +11,9 @@
 
     {% for comment in all_the_comments %}
         <b style="color: darkred">Kommentar zu {{ comment.movie.name }} von {{ comment.user.username }} am {{ comment.timestamp }}</b><br>
+        {% if comment.is_reported %}
+            <b style="color: red">Dieser Kommentar wurde gemeldet!</b><br>
+        {% endif %}
         {{ comment.text }}<br>
 
         {% if can_delete %}
