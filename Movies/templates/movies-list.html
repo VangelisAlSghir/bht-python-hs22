@@ -12,9 +12,6 @@
 
 {% block content %}
     <body>
-    <h1>Die besten Filme</h1>
-
-
     <form method="GET" action="{% url 'movies-list' %}">
         {% csrf_token %}
       <label>Bewertungen:
