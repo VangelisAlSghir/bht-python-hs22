@@ -51,8 +51,8 @@ class Movie(models.Model):
         x = 0
         for r in ratings:
             x = x+r.rating
-        rating = x/len(ratings)
-        return rating
+        return round(x/len(ratings) * 2) / 2
+
 
 class ProductReview(models.Model):
     text = models.TextField(max_length=500)
