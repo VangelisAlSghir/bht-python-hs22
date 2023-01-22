@@ -28,7 +28,7 @@
             <p>Bewertung: {{ rating }} </p>
         </div>
         <div class="card-body">
-            <a class="btn btn-secondary alignleft" target="_blank" href="/{{ selected_movie.pdf }}">Detaillierte Beschreibung</a>
+            <a class="btn btn-secondary alignleft" target="_blank" href="/media/{{ selected_movie.pdf }}">Detaillierte Beschreibung</a>
             {% if user.is_authenticated %}
                 <form class="alignright" method="POST">
                     {% csrf_token %}
@@ -74,7 +74,7 @@
                                 <img src="{% static 'Movies/arrow_down.png' %}" height="20" width="20">
                             {% endif %}
                             <b class="alignright" style="color: darkgreen">Gepostet von: {{ review.user.username }} am {{ review.timestamp }}</b>
-                            <p style="margin-top: 5px">Bewertung: {{ review.rating }} Sterne</p></div>
+                            <p style="margin-top: 5px">Bewertung: {{ review.rating }} {% if review.rating <= 1.1 %}Stern{% else %}Sterne{% endif %}</p></div>
                         <p style="margin-top: 1rem">{{ review.text }}</p>
                         {% if review.user.id == current_user_id %}
                             <a href="{% url 'edit-review' selected_movie.id review.id %}">Bewertung bearbeiten</a>
