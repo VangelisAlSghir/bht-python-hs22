@@ -7,7 +7,7 @@
 
 {% block title %}
     BestFlix</title>
-    <link rel="icon" type="image/x-icon" href="/title_image/BestFlix_small.png">
+    <link rel="icon" type="image/png" href="/static/title_image/BestFlix_small.png">
 {% endblock %}
 
 <body>
@@ -20,8 +20,7 @@
 
             </div>
             <p class="card-text">{{ selected_movie.description }}</p>
-            <p
-                    class="card-text">Preis: {{ selected_movie.price }}€
+            <p class="card-text">Preis: {{ selected_movie.price }}€
                 <br>
                 Altersfreigabe: {{ selected_movie.fsk }}
             </p>
@@ -43,14 +42,12 @@
         </div>
     </div>
 
-             {#Suchfunktion hier wiederverwendet#}
-    <form class="form-inline my-2 my-lg-0" name="myform" method="GET" action="{% url 'movies-detail' selected_movie.id %}">
-            <input class="form-control no-border-radius-right" name="sucheKommentar" type="search" placeholder="Kommentare durchsuchen" aria-label="Search">
-            <button class="btn btn-danger my-2 my-sm-0 no-border-radius-left" type="submit" name="suchen">Suchen</button>
+    {#Suchfunktion hier wiederverwendet#}
+    <form class="form-inline mt-3 mb-2 mx-auto" style="max-width: 50rem" name="myform" method="GET" action="{% url 'movies-detail' selected_movie.id %}">
+        <input class="form-control no-border-radius-right" name="sucheKommentar" type="search" placeholder="Kommentare durchsuchen" aria-label="Search">
+        <button class="btn btn-danger my-2 my-sm-0 no-border-radius-left" type="submit" name="suchen">Suchen</button>
     </form>
 
-
-    <br>
     {% if number_of_selected_movie_reviews != 0 %}
         <div class="card mx-auto border border-danger" style="max-width: 50rem; background-color: #161616">
             <ul class="list-group list-group-flush" style="background-color: #161616">
@@ -87,11 +84,10 @@
             </ul>
         </div>
     {% else %}
-        <p>Keine Kommentare</p>
+        <p class="mx-auto" style="font-weight: bold; max-width: 50rem">Es gibt noch keine Kommentare</p>
     {% endif %}
+
     <br>
-
-
 
     {% if not user_has_rated %}
         <form class="list-group mx-auto border border-danger" style="background-color: #161616; max-width: 50rem;" method="POST" enctype="multipart/form-data">
