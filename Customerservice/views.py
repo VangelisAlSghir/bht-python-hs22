@@ -47,7 +47,7 @@ class ReviewDeleteView(ListView):
         review_id = request.POST['review_id']
         if 'delete' in request.POST:
             ProductReview.objects.get(id=review_id).delete()
-            return redirect('comment-delete')
+            return redirect('review-delete')
 
 
 class MovieDeleteView(ListView):
